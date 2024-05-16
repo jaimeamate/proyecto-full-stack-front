@@ -1,0 +1,52 @@
+.registro-usuario {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 320px;
+  position: absolute;
+  top: calc(40vh - 160px);
+  left: 50%;
+  transform: translateX(-50%);
+  }
+  
+  .registro-usuario h2 {
+    margin-bottom: 20px;
+  }
+  
+  .registro-usuario .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .registro-usuario label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .registro-usuario input[type="text"],
+  .registro-usuario input[type="email"],
+  .registro-usuario input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .registro-usuario button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #5c67f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .registro-usuario button:hover {
+    background-color: #4f3894;
+  }
+  label{
+color: #555; 
+ }
