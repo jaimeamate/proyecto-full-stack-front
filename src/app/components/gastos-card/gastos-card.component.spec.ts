@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TablaGastosComponent } from './tabla-gastos.component';
+import { GastosCardComponent } from './gastos-card.component';
 
-describe('TablaGastosComponent', () => {
-  let component: TablaGastosComponent;
-  let fixture: ComponentFixture<TablaGastosComponent>;
+describe('GastosCardComponent', () => {
+  let component: GastosCardComponent;
+  let fixture: ComponentFixture<GastosCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TablaGastosComponent]
+      imports: [GastosCardComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TablaGastosComponent);
+    fixture = TestBed.createComponent(GastosCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
