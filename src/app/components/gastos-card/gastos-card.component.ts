@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { IUser } from '../../interfaces/iusers.interface';
 
 @Component({
   selector: 'app-gastos-card',
@@ -9,5 +8,4 @@ import { IUser } from '../../interfaces/iusers.interface';
   styleUrl: './gastos-card.component.css'
 })
 export class GastosCardComponent {
-  @Input() miUsuario!: IUser
 }

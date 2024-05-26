@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { IUser } from '../../interfaces/iusers.interface';
 import { GastosCardComponent } from '../gastos-card/gastos-card.component';
 import { RouterLink } from '@angular/router';
 import { SaldosCardComponent } from '../saldos-card/saldos-card.component';
@@ -17,7 +16,6 @@ export class GastosListComponent {
 
 
   //1. Metodo Inject--> en los componenetes donde lo vamos a utilizar
-  usuarios: IUser[]=[]//para poder pintar con un @for en el html
 
   //2. paramentro dentro de la funcion constructor.
   //constructor(private studentServices: StudentsService){}
