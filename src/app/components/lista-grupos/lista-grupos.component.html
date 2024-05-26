@@ -3,7 +3,7 @@
     <!--  d-flex justify-content-center gap-4 align-items-start flex-wrap -->
     <div class="row g-3">
         @for (g of listaGrupos; track $index) {   
-            <div routerLinkActive="active" [routerLink]="['/grupo',g]" class="col-12 col-md-6 col-lg-4">
+            <div routerLinkActive="active" [routerLink]="['/group',1]" class="col-12 col-md-6 col-lg-4">
                 <!-- <div class="p-3 border hover rounded-3 aspect-ratio-16x9 align-content-center fs-1 ">{{g}}</div> -->
                 <app-grupo-item class="p-0"></app-grupo-item>
             </div>
