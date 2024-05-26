@@ -3,17 +3,22 @@ import { RouterLink } from '@angular/router';
 import { GrupoItemComponent } from '../grupo-item/grupo-item.component';
 import { GroupService } from '../../services/group.service';
 import { IGroup } from '../../interfaces/igroup';
+import { CrearGruposComponent } from "../crear-grupos/crear-grupos.component";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
-  selector: 'app-lista-grupos',
-  standalone: true,
-  imports: [RouterLink, GrupoItemComponent],
-  templateUrl: './lista-grupos.component.html',
-  styleUrl: './lista-grupos.component.css'
+    selector: 'app-lista-grupos',
+    standalone: true,
+    templateUrl: './lista-grupos.component.html',
+    styleUrl: './lista-grupos.component.css',
+    imports: [RouterLink, GrupoItemComponent, CrearGruposComponent]
 })
 export class ListaGruposComponent {
   groupService = inject(GroupService)
   groups: IGroup[] = []
+  
+  constructor(private modalService: NgbModal) { }
   
   async getGroups() {
     this.groups = await this.groupService.getAll()
@@ -24,4 +29,7 @@ export class ListaGruposComponent {
     this.getGroups()
   }
   
+  openModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
 }

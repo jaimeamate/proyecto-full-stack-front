@@ -1,0 +1,25 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Gastos</title>
+</head>
+<body>
+    <div class="form-container">
+        <form action="/submit-gasto" method="POST">
+            <h2>Crear Gasto</h2>
+            <div class="form-group">
+                <label for="titulo">Título del Gasto:</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad (€):</label>
+                <input type="number" id="cantidad" name="cantidad" required step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Crear Gasto</button>
+            </div>
+        </form>
+    </div>
