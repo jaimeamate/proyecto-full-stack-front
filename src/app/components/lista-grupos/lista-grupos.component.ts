@@ -5,6 +5,7 @@ import { GroupService } from '../../services/group.service';
 import { IGroup } from '../../interfaces/igroup';
 import { CrearGruposComponent } from "../crear-grupos/crear-grupos.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { COLORS } from '../../utils/colors';
 
 
 @Component({
@@ -17,19 +18,25 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ListaGruposComponent {
   groupService = inject(GroupService)
   groups: IGroup[] = []
+  colors: string[] = COLORS 
   
   constructor(private modalService: NgbModal) { }
   
+  ngOnInit() {
+    this.getGroups()
+  }
+
   async getGroups() {
     this.groups = await this.groupService.getAll()
     console.log(this.groups)
   }
-
-  ngOnInit() {
-    this.getGroups()
-  }
   
   openModal(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  getColorGroup(index: number) {
+    // console.log(index)
+    return this.colors[index % this.colors.length]
   }
 }
