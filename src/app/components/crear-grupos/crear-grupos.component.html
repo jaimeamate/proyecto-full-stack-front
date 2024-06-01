@@ -1,12 +1,12 @@
 <div class="container mt-4">
-    <form action="/creaGrupo" method="POST">
+    <form #form="ngForm" (ngSubmit)="createGroup(form)">
       <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
-        <input type="text" class="form-control" id="titulo" placeholder="Ingrese el titulo">
+        <input type="text" class="form-control" id="titulo" placeholder="Ingrese el titulo" ngModel>
       </div>
       <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
-        <textarea class="form-control" id="descripcion" rows="3" placeholder="Ingrese la descripción"></textarea>
+        <textarea class="form-control" id="descripcion" rows="3" placeholder="Ingrese la descripción" ngModel></textarea>
       </div>
       <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-success">Crear</button>
