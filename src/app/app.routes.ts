@@ -11,12 +11,10 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: ListaGruposComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegistroComponent },
   { path: 'crearGastos', component: CrearGastosComponent },
   { path: 'creaGrupos', component: CrearGruposComponent },   
-  { path: 'register', component: RegistroComponent },
-  {path: '/listaGastos', component:GastosListComponent },
   { path: 'group/:id', component: GrupoViewComponent},
-  { path: 'login/registro', component: RegistroComponent },
   {path: 'listaGastos', component: GastosListComponent},
   { path: "**", redirectTo: 'home' }
 ];

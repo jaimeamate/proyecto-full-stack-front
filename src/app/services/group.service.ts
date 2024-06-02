@@ -30,4 +30,10 @@ export class GroupService {
   deleteById() {
 
   }
+
+  insertOne(group:IGroup) {
+    return firstValueFrom(
+      this.httpClient.post<IGroup>(`${this.urlBase}/register`,group)
+    )
+  }
 }
