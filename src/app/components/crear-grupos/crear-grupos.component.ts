@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { GroupService } from '../../services/group.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IGroup } from '../../interfaces/igroup';
-import { isString } from '@ng-bootstrap/ng-bootstrap/util/util';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-crear-grupos',
   standalone: true,
@@ -13,11 +12,17 @@ import { isString } from '@ng-bootstrap/ng-bootstrap/util/util';
 })
 export class CrearGruposComponent {
   groupService = inject(GroupService)
-  newGroup!: IGroup;
+  router = inject(Router)
+  newGroup: IGroup = {
+    "name": ''
+  };
 
-  async createGroup(form: NgForm): Promise<IGroup | any> {
-    if (!isString(form.name)) return undefined;
-    this.newGroup.name = form.name
-    await this.groupService.insertOne(this.newGroup)
+  createGroup(form: NgForm): void {
+    this.newGroup.name.trim()
+    this.groupService.insertOne(this.newGroup).then(response => {
+      form.resetForm()
+      // const { id } = response
+      // this.router.navigateByUrl(`/group/${id}`)
+    })
   }
 }
