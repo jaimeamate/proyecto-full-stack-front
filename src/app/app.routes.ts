@@ -5,6 +5,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { CrearGastosComponent } from './components/crear-gastos/crear-gastos.component';
 import { CrearGruposComponent } from './components/crear-grupos/crear-grupos.component';
 import { GrupoViewComponent } from './components/grupo-view/grupo-view.component';
+import { GastosListComponent } from './components/gastos-list/gastos-list.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -13,6 +14,9 @@ export const routes: Routes = [
   { path: 'crearGastos', component: CrearGastosComponent },
   { path: 'creaGrupos', component: CrearGruposComponent },   
   { path: 'register', component: RegistroComponent },
+  {path: '/listaGastos', component:GastosListComponent },
   { path: 'group/:id', component: GrupoViewComponent},
+  { path: 'login/registro', component: RegistroComponent },
+  {path: 'listaGastos', component: GastosListComponent},
   { path: "**", redirectTo: 'home' }
 ];
