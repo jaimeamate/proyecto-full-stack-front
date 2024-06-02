@@ -18,17 +18,16 @@ import { COLORS } from '../../utils/colors';
 export class ListaGruposComponent {
   groupService = inject(GroupService)
   groups: IGroup[] = []
-  colors: string[] = COLORS 
+  colors: string[] = COLORS  
   
   constructor(private modalService: NgbModal) { }
-  
+
   ngOnInit() {
     this.getGroups()
   }
 
   async getGroups() {
     this.groups = await this.groupService.getAll()
-    console.log(this.groups)
   }
   
   openModal(content: any) {
@@ -36,7 +35,6 @@ export class ListaGruposComponent {
   }
 
   getColorGroup(index: number) {
-    // console.log(index)
     return this.colors[index % this.colors.length]
   }
 }
