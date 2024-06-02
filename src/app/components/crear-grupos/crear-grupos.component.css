@@ -1,0 +1,20 @@
+.container {
+    max-width: 600px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+  }
+  
+  .btn-success {
+    border-radius: 5px;
+  }
+  
