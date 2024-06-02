@@ -2,14 +2,31 @@
     <!-- container -->
     <!--  d-flex justify-content-center gap-4 align-items-start flex-wrap -->
     <div class="row g-3">
-        @for (g of listaGrupos; track $index) {   
-            <div routerLinkActive="active" [routerLink]="['/grupo',g]" class="col-12 col-md-6 col-lg-4">
+        @for (g of groups; track g.id; let i = $index) {   
+            <div class="col-12 col-md-6 col-lg-4">
                 <!-- <div class="p-3 border hover rounded-3 aspect-ratio-16x9 align-content-center fs-1 ">{{g}}</div> -->
-                <app-grupo-item class="p-0"></app-grupo-item>
+                <div class="card shadow" [style]="getColorGroup(i)">
+                  <app-grupo-item [group]="g" class="p-0"></app-grupo-item>
+                </div>
             </div>
         }
     </div>
     <div class="d-flex justify-content-center position-sticky sticky-bottom mt-3">
-        <button class=" btn btn-success rounded-pill float-end fs-3 px-4 mb-3">Nuevo grupo</button>
+        <button id="creaGrupo" class=" btn btn-success rounded-pill float-end fs-3 px-4 mb-3" data-bs-toggle="modal" data-bs-target="#crearGrupoModal">Nuevo grupo</button>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="crearGrupoModal" tabindex="-1" aria-labelledby="crearGrupoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="crearGrupoModalLabel">Crear Grupo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-crear-grupos></app-crear-grupos>
+      </div>
+    </div>
+  </div>
+</div>
