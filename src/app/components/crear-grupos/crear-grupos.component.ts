@@ -27,12 +27,10 @@ export class CrearGruposComponent {
     this.newGroup.name.trim()
     this.groupService.insertOne(this.newGroup).then(response => {
       form.resetForm()
+      this.groupCreated.emit();
+      this.activeModal.close();
       // const { id } = response
       // this.router.navigateByUrl(`/group/${id}`)
     });
-    this.groupCreated.emit();
-    this.activeModal.close();
-
-    
   }
 }

@@ -26,7 +26,7 @@ export class ListaGruposComponent {
     this.getGroups()
   }
 
-  async getGroups() {
+  async getGroups(): Promise<void> {
     this.groups = await this.groupService.getAll()
   }
 
@@ -36,10 +36,9 @@ export class ListaGruposComponent {
 
   openCrearGrupoModal() {
     const modalRef = this.modalService.open(CrearGruposComponent);
-    modalRef.componentInstance.groupCreated.subscribe(() => {
-      // Creo necesario hacer aqui una renderizacion de la lista de grupos, lo dejo indicado
+    modalRef.componentInstance.groupCreated.subscribe(async () => {
+      await this.getGroups()
     });
   }
-
 
 }
