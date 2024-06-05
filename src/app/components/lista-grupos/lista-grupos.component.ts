@@ -4,7 +4,7 @@ import { GrupoItemComponent } from '../grupo-item/grupo-item.component';
 import { GroupService } from '../../services/group.service';
 import { IGroup } from '../../interfaces/igroup';
 import { CrearGruposComponent } from "../crear-grupos/crear-grupos.component";
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { COLORS } from '../../utils/colors';
 
 
@@ -26,15 +26,19 @@ export class ListaGruposComponent {
     this.getGroups()
   }
 
-  async getGroups() {
+  async getGroups(): Promise<void> {
     this.groups = await this.groupService.getAll()
-  }
-  
-  openModal(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   getColorGroup(index: number) {
     return this.colors[index % this.colors.length]
   }
+
+  openCrearGrupoModal() {
+    const modalRef = this.modalService.open(CrearGruposComponent);
+    modalRef.componentInstance.groupCreated.subscribe(async () => {
+      await this.getGroups()
+    });
+  }
+
 }
