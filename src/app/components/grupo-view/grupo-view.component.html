@@ -1,10 +1,41 @@
 <main>
-    <section>
-        <h1>{{group?.name}}</h1>
-        <p>DESCRIPCION</p>
+    <section class="d-flex justify-content-between pt-4 px-4">
+        <div class="flex-grow-1">
+            <div>
+                @if (!editing) {
+                    <h1>{{groupBase.name}}</h1>
+                    <p>{{groupBase.description || 'Without description'}}</p>
+                } @else {
+                    <label for="name">Name:</label>
+                    <input class="form-control" type="text" name="name" id="name" [placeholder]="groupBase.name" [(ngModel)]="group.name" minlength="2" maxlength="15">
+                    <hr>
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" type="text" name="description" id="description" [placeholder]="groupBase.description || 'Type a description'" [(ngModel)]="group.description"></textarea>
+                    <hr>
+                    <div class="float-end">
+                        <button class="btn btn-success me-1" type="button" (click)="editGroup()">Apply</button>
+                        <button class="btn btn-secondary" type="button" (click)="editGroup()">Cancel</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row flex-grow-1">
+            <div class="col">
+                <div ngbDropdown class="d-inline-block float-end">
+                    <button type="button" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle>
+                        Options
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button (click)="editMode()" ngbDropdownItem>Edit {{groupBase.name}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <hr>
     <section>
-        <p>AQUI VAN LOS LOGS DE GASTOS</p>
+        <!-- <p>AQUI VAN LOS LOGS DE GASTOS</p> -->
+        <app-gastos-list></app-gastos-list>
     </section>
 </main>
