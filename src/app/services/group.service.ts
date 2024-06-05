@@ -32,6 +32,7 @@ export class GroupService {
   }
 
   insertOne(group:IGroup) {
+    // let name = group.name
     return firstValueFrom(
       this.httpClient.post<IGroup>(`${this.urlBase}/register`,group)
     )

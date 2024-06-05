@@ -33,7 +33,7 @@
     border-radius: 5px;
   }
   
-  .registro-usuario button {
+  /* .registro-usuario button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -42,11 +42,17 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+  } */
   
-  .registro-usuario button:hover {
+  /* .registro-usuario button:hover {
     background-color: #4f3894;
   }
   label{
 color: #555; 
- }
+ } */
+
+ .text-danger {
+  color: red;
+  font-size: 0.8em;
+}
+
