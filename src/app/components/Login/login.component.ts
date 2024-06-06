@@ -21,20 +21,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.usuariosService.login(this.credentials).subscribe(
-      response => {
+    this.usuariosService.login(this.credentials).subscribe({
+      next: (response) => {
         // Manejo de la respuesta del login
         console.log('Login exitoso:', response);
         // Redirigir a la página principal o a otra página después del login
         this.router.navigate(['/home']);
       },
-      error => {
+      error: (err) => {
         // Manejo de errores
-        console.error('Error en el login:', error);
+        console.error('Error en el login:', err);
         alert('Usuario o contraseña incorrectos');
       }
-    );
+    });
   }
+  
 
   
 }
