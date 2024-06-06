@@ -10,7 +10,7 @@
             @if (name.errors?.['required']) { <span>Required</span> }
             @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
             @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
-          </div>
+          </div> 
         }
       </div>
       <div class="mb-3">
