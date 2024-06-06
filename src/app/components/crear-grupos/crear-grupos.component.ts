@@ -23,7 +23,7 @@ export class CrearGruposComponent {
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  createGroup(form: NgForm): void {
+  createGroup(form: NgForm): void { 
     this.newGroup.name.trim()
     this.groupService.insertOne(this.newGroup).then(response => {
       form.resetForm()

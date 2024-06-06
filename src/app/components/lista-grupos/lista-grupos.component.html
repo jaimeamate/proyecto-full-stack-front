@@ -1,15 +1,20 @@
 <section class="container pt-4">
     <!-- container -->
     <!--  d-flex justify-content-center gap-4 align-items-start flex-wrap -->
-    <div class="row g-3">
-        @for (g of groups; track g.id; let i = $index) {   
-            <div class="col-12 col-md-6 col-lg-4">
-                <!-- <div class="p-3 border hover rounded-3 aspect-ratio-16x9 align-content-center fs-1 ">{{g}}</div> -->
-                <div class="card shadow" [style]="getColorGroup(i)">
-                  <app-grupo-item [group]="g" class="p-0"></app-grupo-item>
-                </div>
-            </div>
-        }
+    @if(groups.length>0){
+      <div class="row g-3">
+          @for (g of groups; track g.id; let i = $index) {   
+              <div class="col-12 col-md-6 col-lg-4">
+                  <!-- <div class="p-3 border hover rounded-3 aspect-ratio-16x9 align-content-center fs-1 ">{{g}}</div> -->
+                  <div class="card shadow" [style]="getColorGroup(i)">
+                    <app-grupo-item [group]="g" class="p-0"></app-grupo-item>
+                  </div>
+              </div>
+          }
+      </div>
+    }
+    <div class="d-flex justify-content-center text-secondary">
+      <small>{{groups.length || 0}} groups has been loaded</small>
     </div>
     <div class="d-flex justify-content-center position-sticky sticky-bottom mt-3">
       <button class="btn btn-success rounded-pill float-end fs-3 px-4 mb-3" (click)="openCrearGrupoModal()">Nuevo grupo</button>

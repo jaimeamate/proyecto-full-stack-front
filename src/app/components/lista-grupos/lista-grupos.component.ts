@@ -27,6 +27,7 @@ export class ListaGruposComponent {
   }
 
   async getGroups(): Promise<void> {
+    // console.log(await this.groupService.getAll())
     this.groups = await this.groupService.getAll()
   }
 

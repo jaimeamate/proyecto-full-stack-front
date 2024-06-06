@@ -1,23 +1,39 @@
-<div class="registro-usuario ">
-    <h2 class="">Registro de Usuario</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre"  required>
+<div class="registro-usuario">
+  <h2>Registro de Usuario</h2>
+  <form #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" ngModel required #nombre="ngModel">
+      <div *ngIf="nombre.invalid && nombre.touched">
+        <small class="text-danger">Nombre es requerido.</small>
       </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" ngModel required email #email="ngModel">
+      <div *ngIf="email.invalid && email.touched">
+        <small class="text-danger" *ngIf="email.errors?.['required']">Email es requerido.</small>
+        <small class="text-danger" *ngIf="email.errors?.['email']">Email no es válido.</small>
       </div>
-      <div class="form-group">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" ngModel required minlength="6" #password="ngModel">
+      <div *ngIf="password.invalid && password.touched">
+        <small class="text-danger" *ngIf="password.errors?.['required']">Contraseña es requerida.</small>
+        <small class="text-danger" *ngIf="password.errors?.['minlength']">Contraseña debe tener al menos 6 caracteres.</small>
       </div>
-      <div class="form-group">
-        <label for="repeatPassword">Repite Contraseña:</label>
-        <input type="password" id="repeatPassword" name="repeatPassword" required>
+    </div>
+    <div class="form-group">
+      <label for="repeatPassword">Repite Contraseña:</label>
+      <input type="password" id="repeatPassword" name="repeatPassword" ngModel required minlength="6" #repeatPassword="ngModel" [pattern]="password.value">
+      <div *ngIf="repeatPassword.invalid && repeatPassword.touched">
+        <small class="text-danger" *ngIf="repeatPassword.errors?.['required']">Repite Contraseña es requerida.</small>
+        <small class="text-danger" *ngIf="repeatPassword.errors?.['minlength']">Contraseña debe tener al menos 6 caracteres.</small>
+        <small class="text-danger" *ngIf="repeatPassword.errors?.['pattern']">Las contraseñas no coinciden.</small>
       </div>
-      <button type="submit">Registrarse</button>
-    </form>
-  </div>
-  
+    </div>
+    <!--  -->
+    <button class="btn btn-success" [disabled]="registroForm.invalid" type="submit" >Registrarse</button>
+  </form>
+</div>
