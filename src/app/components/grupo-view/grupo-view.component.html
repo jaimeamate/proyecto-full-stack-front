@@ -7,7 +7,7 @@
                     <p>{{groupBase.description || 'Without description'}}</p>
                 } @else {
                     <label for="name">Name:</label>
-                    <input class="form-control" type="text" name="name" id="name" [placeholder]="groupBase.name" [(ngModel)]="group.name" minlength="2" maxlength="15">
+                    <input class="form-control" type="text" name="name" id="name" [placeholder]="groupBase.name || 'Type a group name'" [(ngModel)]="group.name" minlength="2" maxlength="15">
                     <hr>
                     <label for="description">Description:</label>
                     <textarea class="form-control" type="text" name="description" id="description" [placeholder]="groupBase.description || 'Type a description'" [(ngModel)]="group.description"></textarea>
