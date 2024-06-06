@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/user.service'; 
 import { Usuario } from '../../interfaces/iusuario';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -27,7 +28,7 @@ export class RegistroComponent {
   isUpdateMode: boolean = false;
   private modalRef?: NgbModalRef;
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private modalService: NgbModal,  private usuariosService: UsuariosService) {
+  constructor(private authService: AuthService, private route: ActivatedRoute, private modalService: NgbModal,  private usuariosService: UsuariosService, private router: Router) {
     this.usuario = {
       user_id: 0,
       first_name: '',
@@ -72,11 +73,18 @@ export class RegistroComponent {
       next: (response) => {
         console.log('Usuario dado de baja:', response);
         modal.close(); // Cierro el modal
+        this.onLogout();
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Error al dar de baja al usuario:', err);
       }
     });
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 

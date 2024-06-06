@@ -3,6 +3,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UsuariosService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
-  constructor(private usuariosService: UsuariosService, private router: Router) { }
+  constructor(private usuariosService: UsuariosService, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {}
   onSubmit() {
     this.usuariosService.login(this.credentials).subscribe({
@@ -38,7 +39,12 @@ export class LoginComponent implements OnInit {
         // Guarda el nombre del usuario en el almacenamiento local
         localStorage.setItem('email', decodedToken.email);
         localStorage.setItem('role', decodedToken.role);
-        console.log(decodedToken);
+
+        if (decodedToken.ind_baja) {
+          alert('Su cuenta está inactiva. Contacte al administrador.');
+          this.onLogout();
+          return;
+        }
         // Redirige a la página principal o a otra página después del login
         this.router.navigate(['/home']);
       },
@@ -50,6 +56,10 @@ export class LoginComponent implements OnInit {
     });
   }
   
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
   
 
   
