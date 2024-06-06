@@ -7,5 +7,6 @@ export interface Usuario {
     email: string;
     image: string;
     password: string;
+    ind_baja:boolean;
   }
   
