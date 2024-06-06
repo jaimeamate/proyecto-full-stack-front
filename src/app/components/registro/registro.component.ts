@@ -29,8 +29,7 @@ export class RegistroComponent {
 
   constructor(private authService: AuthService, private route: ActivatedRoute, private modalService: NgbModal,  private usuariosService: UsuariosService) {
     this.usuario = {
-      _id: '',
-      id: 0,
+      user_id: 0,
       first_name: '',
       last_name: '',
       username: '',
@@ -69,7 +68,7 @@ export class RegistroComponent {
 
   deleteAccount(modal: NgbModalRef) {
     // Actualizar el campo `ind_baja` a `true`
-    this.usuariosService.updateUserIndBaja(this.usuario.id, true).subscribe({
+    this.usuariosService.updateUserIndBaja(this.usuario.user_id, true).subscribe({
       next: (response) => {
         console.log('Usuario dado de baja:', response);
         modal.close(); // Cierro el modal
