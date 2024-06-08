@@ -3,19 +3,27 @@
         <div class="flex-grow-1">
             <div>
                 @if (!editing) {
-                    <h1>{{groupBase.name}}</h1>
-                    <p>{{groupBase.description || 'Without description'}}</p>
+                    <h1>{{group.name}}</h1>
+                    <p>{{group.description || 'Without description'}}</p>
                 } @else {
-                    <label for="name">Name:</label>
-                    <input class="form-control" type="text" name="name" id="name" [placeholder]="groupBase.name || 'Type a group name'" [(ngModel)]="group.name" minlength="2" maxlength="15">
-                    <hr>
-                    <label for="description">Description:</label>
-                    <textarea class="form-control" type="text" name="description" id="description" [placeholder]="groupBase.description || 'Type a description'" [(ngModel)]="group.description"></textarea>
-                    <hr>
-                    <div class="float-end">
-                        <button class="btn btn-success me-1" type="button" (click)="editGroup()">Apply</button>
-                        <button class="btn btn-secondary" type="button" (click)="editGroup()">Cancel</button>
-                    </div>
+                    <form #form="ngForm" (ngSubmit)="applyEdit(form)">
+                        <label for="name">Name:</label>
+                        <input class="form-control" type="text" pattern="(?=.*[a-zA-Z])[\w\s]*" [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.dirty" [ngModel]="group.name" #name="ngModel" name="name" id="name" [placeholder]="group.name || 'Type a group name'" minlength="2" maxlength="15" ngModel required>
+                        @if (name.invalid && name.dirty) {
+                            <div class="text-danger">
+                                @if (name.errors?.['required']) { <span>Required</span> }
+                                @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
+                                @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
+                            </div>
+                        }
+                        <label for="description" class="mt-2">Description:</label>
+                        <textarea class="form-control" type="text" [ngModel]="group.description" name="description" id="description" [placeholder]="group.description || 'Type a description'" ngModel></textarea>
+
+                        <div class="float-end mt-2">
+                            <button class="btn btn-success me-1" type="submit">Apply</button>
+                            <button class="btn btn-secondary" type="reset" (click)="editMode()">Cancel</button>
+                        </div>
+                    </form>
                 }
             </div>
         </div>
@@ -27,7 +35,16 @@
                         Options
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button (click)="editMode()" ngbDropdownItem>Edit {{groupBase.name}}</button>
+                        <button (click)="editMode()" ngbDropdownItem>
+                            @if (editing) {
+                                Cancel edit
+                            } @else {
+                                Edit group
+                            }
+                        </button>
+                        <button ngbDropdownItem>
+                            Members
+                        </button>
                     </div>
                 </div>
             </div>
