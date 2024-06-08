@@ -37,13 +37,16 @@
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button (click)="editMode()" ngbDropdownItem>
                             @if (editing) {
-                                Cancel edit
+                                <span class="text-danger">Cancel</span>
                             } @else {
-                                Edit group
+                                Edit
                             }
                         </button>
                         <button ngbDropdownItem>
                             Members
+                        </button>
+                        <button ngbDropdownItem class="text-danger" (click)="onDelete()">
+                            Delete
                         </button>
                     </div>
                 </div>
