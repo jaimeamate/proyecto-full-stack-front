@@ -1,10 +1,61 @@
 <main>
-    <section>
-        <h1>{{group?.name}}</h1>
-        <p>DESCRIPCION</p>
+    <section class="d-flex justify-content-between pt-4 px-4">
+        <div class="flex-grow-1">
+            <div>
+                @if (!editing) {
+                    <h1>{{group.name}}</h1>
+                    <p>{{group.description || 'Without description'}}</p>
+                } @else {
+                    <form #form="ngForm" (ngSubmit)="applyEdit(form)">
+                        <label for="name">Name:</label>
+                        <input class="form-control" type="text" pattern="(?=.*[a-zA-Z])[\w\s]*" [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.dirty" [ngModel]="group.name" #name="ngModel" name="name" id="name" [placeholder]="group.name || 'Type a group name'" minlength="2" maxlength="15" ngModel required>
+                        @if (name.invalid && name.dirty) {
+                            <div class="text-danger">
+                                @if (name.errors?.['required']) { <span>Required</span> }
+                                @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
+                                @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
+                            </div>
+                        }
+                        <label for="description" class="mt-2">Description:</label>
+                        <textarea class="form-control" type="text" [ngModel]="group.description" name="description" id="description" [placeholder]="group.description || 'Type a description'" ngModel></textarea>
+
+                        <div class="float-end mt-2">
+                            <button class="btn btn-success me-1" type="submit">Apply</button>
+                            <button class="btn btn-secondary" type="reset" (click)="editMode()">Cancel</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+
+        <div class="row flex-grow-1">
+            <div class="col">
+                <div ngbDropdown class="d-inline-block float-end">
+                    <button type="button" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle>
+                        Options
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button (click)="editMode()" ngbDropdownItem>
+                            @if (editing) {
+                                <span class="text-danger">Cancel</span>
+                            } @else {
+                                Edit
+                            }
+                        </button>
+                        <button ngbDropdownItem>
+                            Members
+                        </button>
+                        <button ngbDropdownItem class="text-danger" (click)="onDelete()">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <hr>
     <section>
-        <p>AQUI VAN LOS LOGS DE GASTOS</p>
+        <!-- <p>AQUI VAN LOS LOGS DE GASTOS</p> -->
+        <app-gastos-list></app-gastos-list>
     </section>
 </main>
