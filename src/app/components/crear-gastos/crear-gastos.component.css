@@ -17,3 +17,17 @@
   .btn-success {
     border-radius: 5px;
   }
+
+  input.ng-invalid.ng-touched{
+    border-bottom: 3px solid  tomato;
+  }
+  
+  input.ng-valid.ng-touched{
+    border-bottom: 3px solid lightgreen;
+  }
+  
+  .error{
+    color: tomato;
+    font-size: 80%;
+    margin: 0px 0px 0px 15px;
+  }

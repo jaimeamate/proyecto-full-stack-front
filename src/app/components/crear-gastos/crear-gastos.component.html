@@ -1,39 +1,41 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario de Gastos</title>
-</head>
-    
-
-    <div class="container mt-4">
-        <form #form="ngForm" (ngSubmit)="createSpent(form)" novalidate>
-            <div class="row mb-3">
-                <div class="col-12">
-                    <label for="titulo-gasto" class="form-label">Titulo gasto</label>
-                    <span class="text-danger">*</span>
-                    <input type="text" pattern="(?=.*[a-zA-Z])[\w\s]*" #name="ngModel" class="form-control" [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.dirty" id="titulo-gasto" name="name" placeholder="Ingrese el titulo" [(ngModel)]="createSpent.name" minlength="2" maxlength="15" required>
-                    @if (name.invalid && name.dirty) {
-                        <div class="text-danger">
-                            @if (name.errors?.['required']) { <span>Required</span> }
-                            @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
-                            @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
-                        </div>
-                    }
-                </div>
-
-                <div class="col-12">
-                    <label for="tipo-gasto" class="form-label">Tipo Gasto</label>
-                    <span class="text-danger">*</span>
-                        <input type="text" pattern="" >
-                    
-                </div>
-
-
-                <div class="mb-3">
-
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-success" [disabled]="form.invalid">Crear</button>
-                </div>
-            </div>
-        </form>
-    </div>
+ 
+<section class="container p-4">
+    <h3>NUEVO GASTO</h3>
+    <form [formGroup]="spentsForm" (ngSubmit)="getDataForm()" class="mt-4">
+        <div class="mb-3">
+            <label class="form-label" for="name">Nombre gasto</label>
+            <input class="form-control"  type="text" id="name" formControlName="name">
+            @if(checkControl('name', 'required')){
+                <p class="error">Campo requerido</p>
+                }
+          
+                @if(checkControl('name', 'minlength') ){
+                <p class="error">El campo tiene que tener minimo 3 caracteres</p>
+                }
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="amount">Cantidad</label>
+            <input class="form-control"  type="number" id="amount" formControlName="amount">
+            @if(checkControl('amount', 'required')){
+                <p class="error">Campo requerido</p>
+                }
+          
+                @if(checkControl('amount', 'minlenght')){
+                <p class="error">El campo tiene que tener minimo 1 caracteres</p>
+                }
+          
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="date">Fecha</label>
+            <input class="form-control"  type="date" id="date" formControlName="date">
+            @if(checkControl('date', 'required')){
+                <p class="error">Campo requerido</p>
+                }
+          
+                      
+        </div>
+       
+        
+        <input type="submit" value="Enviar" class="btn btn-outline-dark mt-3" [disabled]="!spentsForm.valid">
+    </form>
+</section>

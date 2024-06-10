@@ -40,6 +40,6 @@ export class ListaGruposComponent {
     modalRef.componentInstance.groupCreated.subscribe(async () => {
       await this.getGroups()
     });
-  }
+  } 
 
 }

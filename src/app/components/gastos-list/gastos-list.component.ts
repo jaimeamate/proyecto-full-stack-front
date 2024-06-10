@@ -15,21 +15,22 @@ import { PagosService } from '../../services/pagos.service';
   styleUrl: './gastos-list.component.css'
 })
 export class GastosListComponent {
+  pagosService = inject(PagosService)
+
   listaUsuarios = ['Grupo 1','Grupo 2','Grupo 3','Grupo 4','Grupo 5']
   listaGastos = ['Grupo 1','Grupo 2','Grupo 3','Grupo 4','Grupo 5']
+  spent: Iactivity[] = [] 
 
-  @Input() myactivity! :Iactivity;
-  activityService = Inject(PagosService)
-  spent: Iactivity[] = []
 
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(){
     this.getSpent()
   }
+  
 //PARA ABRIR EL FORM CON EL BOTON
   async getSpent(): Promise<void> {
-    this.spent = await this.activityService.getAll()
+    this.spent = await this.pagosService.getAll()
   }
 
   openGastosModal() {
