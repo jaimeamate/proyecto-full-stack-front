@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-crear-gastos',
@@ -25,7 +26,7 @@ export class CrearGastosComponent {
   // public activeModal: NgbActiveModal
     
 
-  constructor(){
+  constructor(public activeModal: NgbActiveModal) { 
     this.spentsForm = new FormGroup({
       
       name: new FormControl('',[
@@ -51,10 +52,27 @@ export class CrearGastosComponent {
 
   }
 
-     getDataForm(): void {
-     
-  }
+  // getDataForm(): Promise<void> {
+  //   return new Promise<void>((resolve, reject) => {
+  //     if (this.spentsForm.valid) {
+  //       const { name, amount, date } = this.spentsForm.value;
+  //       const idGroup = this.groupService.getCurrentGroupId(); // assuming this method exists
+  //       const type = 'someType'; // assuming you have a type
 
+  //       this.pagosService.insert({ name, amount, date, idGroup, type }).then(() => {
+  //         this.spentCreated.emit();
+  //         this.activeModal.close();
+  //         resolve();
+  //       }).catch((error) => {
+  //         console.error(error);
+  //         reject(error);
+  //       });
+  //     } else {
+  //       reject(new Error('Form is invalid'));
+  //     }
+  //   });
+  // }
+  
   checkControl(formControlName: string, validador: string): boolean | undefined {
     return this.spentsForm.get(formControlName)?.hasError(validador) && this.spentsForm.get(formControlName)?.touched
   }
