@@ -6,15 +6,17 @@ import { CrearGastosComponent } from './components/crear-gastos/crear-gastos.com
 import { CrearGruposComponent } from './components/crear-grupos/crear-grupos.component';
 import { GrupoViewComponent } from './components/grupo-view/grupo-view.component';
 import { GastosListComponent } from './components/gastos-list/gastos-list.component';
+import { authGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'home', component: ListaGruposComponent },
+  { path: 'home', component: ListaGruposComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistroComponent },
-  { path: 'crearGastos', component: CrearGastosComponent },
-  { path: 'creaGrupos', component: CrearGruposComponent },   
-  { path: 'group/:id', component: GrupoViewComponent},
-  {path: 'listaGastos', component: GastosListComponent},
+  { path: 'crearGastos', component: CrearGastosComponent, canActivate: [authGuard] },
+  { path: 'creaGrupos', component: CrearGruposComponent, canActivate: [authGuard] },   
+  { path: 'group/:id', component: GrupoViewComponent, canActivate: [authGuard]},
+  { path: 'listaGastos', component: GastosListComponent, canActivate: [authGuard]},
   { path: "**", redirectTo: 'home' }
 ];
