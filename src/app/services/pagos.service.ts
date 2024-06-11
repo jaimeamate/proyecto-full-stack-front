@@ -6,7 +6,7 @@ import { Iactivity } from '../interfaces/iactivity';
 
 @Injectable({
   providedIn: 'root'
-})
+}) 
 export class PagosService {
   httpClient = inject(HttpClient);
   urlBase = 'http://localhost:3030/api/activity';

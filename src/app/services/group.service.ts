@@ -23,12 +23,16 @@ export class GroupService {
     )
   }
 
-  updateById() {
-
+  updateById({id, name}:IGroup) {
+    return firstValueFrom(
+      this.httpClient.patch<any>(`${this.urlBase}/${id}`,{name})
+    )
   }
-
-  deleteById() {
-
+  
+  deleteById(id:number) {
+    return firstValueFrom(
+      this.httpClient.delete<any>(`${this.urlBase}/${id}`)
+    )
   }
 
   insertOne(group:IGroup) {

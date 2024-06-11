@@ -8,7 +8,9 @@ import { Usuario } from '../interfaces/iusuario';
 })
 export class UsuariosService {
 
-  private authUrl: string = 'http://localhost:3030/api/auth/login'
+  private authUrl: string = 'http://localhost:3030/api/auth/login';
+  private usersUrl: string = 'http://localhost:3030/api/user';
+
 
   private httpClient = inject(HttpClient);
 
@@ -20,4 +22,8 @@ export class UsuariosService {
   register(newUser: Usuario): Observable<any> {
     return this.httpClient.post<any>(this.authUrl, newUser);
   }
+    // Nuevo método para actualizar el campo ind_baja
+    updateUserIndBaja(id: number, indBaja: boolean): Observable<any> {
+      return this.httpClient.patch<any>(`${this.usersUrl}/${id}`, { ind_baja: indBaja });
+    }
 }

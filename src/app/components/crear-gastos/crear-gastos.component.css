@@ -1,58 +1,33 @@
-/* styles.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+.container {
+    max-width: 600px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+  }
+  
+  .btn-success {
+    border-radius: 5px;
+  }
 
-.form-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 50%;
-}
-
-h2 {
-    color: #333;
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
-}
-
-input[type="text"],
-input[type="number"],
-textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box; /* makes sure the padding doesn't affect the width */
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
+  input.ng-invalid.ng-touched{
+    border-bottom: 3px solid  tomato;
+  }
+  
+  input.ng-valid.ng-touched{
+    border-bottom: 3px solid lightgreen;
+  }
+  
+  .error{
+    color: tomato;
+    font-size: 80%;
+    margin: 0px 0px 0px 15px;
+  }
