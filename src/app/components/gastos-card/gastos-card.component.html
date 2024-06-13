@@ -1,17 +1,42 @@
 <div class="card shadow">
-    <h3 class="card-header text-center">GASOLINA</h3>
+    <h3 class="card-header text-center">{{miSpent?.name}}</h3>
     <ul class="list-group m-1">
-        <li class="list-group-item">24/02/24</li>
-        <li class="list-group-item bg-primary text-white">GASTO: 30€</li>
+        <li class="list-group-item">{{miSpent?.date}}</li>
+        <li class="list-group-item bg-primary text-white">GASTO: {{miSpent?.amount}}</li>
     </ul>
 </div>
 
 
-<!-- <div class="card shadow">
-    <h3 class="card-header text-center">{{ miUsuario.nombre }}</h3>
-    <ul class="list-group m-1">
-        <li class="list-group-item">Asunto{{ miUsuario.edad }}</li>
-        <li class="list-group-item">Email: <a [href]="'mailto:' + miUsuario.email" class="text-danger">{{ miUsuario.email }}</a></li>
-        <li class="list-group-item bg-dark text-white">{{ miUsuario.curso }}</li>
-    </ul>
+<!-- <div class="container">
+    <div class="row align-items-start">
+      <div class="col">
+        Una de tres columnas
+      </div>
+      <div class="col">
+        Una de tres columnas
+      </div>
+      <div class="col">
+        Una de tres columnas
+      </div>
+    </div> -->
+
+<!-- <div class="row">
+    <tr>
+        <th scope="">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+      </tr>
 </div> -->
+
+<!-- <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>{{spent?.name}}</td>
+        <td>{{spent?.date}}</td>
+        <td>{{spent?.amount}}</td>
+
+      </tr>
+     
+    </tbody>
+</table> -->

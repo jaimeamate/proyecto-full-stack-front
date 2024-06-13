@@ -16,32 +16,33 @@ import { PagosService } from '../../services/pagos.service';
 })
 export class GastosListComponent {
   pagosService = inject(PagosService)
-
-  listaUsuarios = ['Grupo 1','Grupo 2','Grupo 3','Grupo 4','Grupo 5']
-  listaGastos = ['Grupo 1','Grupo 2','Grupo 3','Grupo 4','Grupo 5']
-  spent: Iactivity[] = [] 
+  spents: Iactivity[] = [] 
 
 
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(){
-    this.getSpent()
+    this.getSpents()
   }
   
 //PARA ABRIR EL FORM CON EL BOTON
-  async getSpent(): Promise<void> {
-    this.spent = await this.pagosService.getAll()
+  async getSpents(): Promise<void> {
+  console.log(await this.pagosService.getAll())
+
+   this.spents = await this.pagosService.getAll()
+
+
   }
+
+
 
   openGastosModal() {
     const modalRef = this.modalService.open(CrearGastosComponent);
     modalRef.componentInstance.spentCreated.subscribe(async () => {
-     await this.getSpent()
+     await this.getSpents()
     
     });
   }
-
-
 
 
 }

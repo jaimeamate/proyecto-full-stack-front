@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
+import { Iactivity } from '../../interfaces/iactivity';
 
 @Component({
   selector: 'app-crear-gastos',
@@ -20,6 +21,13 @@ export class CrearGastosComponent {
   groupService = inject(GroupService)
   router = inject(Router)
   activateRoute = inject(ActivatedRoute)
+  newSpent: Iactivity = {
+    name: "",
+    amount: 0,
+    date: "",
+    idGroup: 0,
+    type: ""
+  };
 
 
   // public activeModal: NgbActiveModal
@@ -51,9 +59,15 @@ export class CrearGastosComponent {
 
   }
 
-     getDataForm(): void {
-     
-  }
+    getDataForm(): void {
+             
+        // Call the appropriate service method to insert the data
+        this.pagosService.insert(this.newSpent).then(() => {
+          // Emit an event to notify the parent component that the data has been created
+          this.spentCreated.emit();
+        });
+          }
+  
 
   checkControl(formControlName: string, validador: string): boolean | undefined {
     return this.spentsForm.get(formControlName)?.hasError(validador) && this.spentsForm.get(formControlName)?.touched
@@ -61,7 +75,6 @@ export class CrearGastosComponent {
 
 
 }
-
  
   
 

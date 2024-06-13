@@ -29,7 +29,10 @@ export class PagosService {
   }
 
   insert(fromValue:Iactivity){
-    return lastValueFrom(this.httpClient.post<Iactivity>(this.urlBase,fromValue));
+    return lastValueFrom(this.httpClient.post<Iactivity>(`${this.urlBase}/register`, fromValue));
   }
+
+
+
   constructor() { }
 }

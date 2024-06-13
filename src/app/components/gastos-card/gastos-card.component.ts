@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Iactivity } from '../../interfaces/iactivity';
 
 @Component({
   selector: 'app-gastos-card',
@@ -8,4 +9,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './gastos-card.component.css'
 })
 export class GastosCardComponent {
+  @Input() miSpent!: Iactivity
 }
