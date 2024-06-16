@@ -15,16 +15,21 @@ import Swal from 'sweetalert2';
   styleUrl: './grupo-view.component.css'
 })
 export class GrupoViewComponent {
+
+  
+
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
   groupService = inject(GroupService)
   group: IGroup = { 
     "name": '',
-    "description": ''
+    "description": '',
+    "id": 0
   };
   editing: boolean = false;
   
   ngOnInit() {
+
     this.activatedRoute.params.subscribe(async (params:any) => {
       const id = params.id
       try {
@@ -34,6 +39,8 @@ export class GrupoViewComponent {
       }
     })
   }
+
+ 
 
   editMode() {
     this.editing = !this.editing

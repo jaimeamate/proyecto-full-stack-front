@@ -1,4 +1,4 @@
-import { Component, Inject, Input, inject } from '@angular/core';
+import { Component, Inject, Input, SimpleChange, SimpleChanges, inject } from '@angular/core';
 import { GastosCardComponent } from '../gastos-card/gastos-card.component';
 import { RouterLink } from '@angular/router';
 import { SaldosCardComponent } from '../saldos-card/saldos-card.component';
@@ -17,22 +17,46 @@ import { PagosService } from '../../services/pagos.service';
 export class GastosListComponent {
   pagosService = inject(PagosService)
   spents: Iactivity[] = [] 
+  allActivities: Iactivity[] = []
 
+
+  @Input() idGroup!: number
 
   constructor(private modalService: NgbModal) { }
 
-  ngOnInit(){
+  ngOnInit(): void {
     this.getSpents()
   }
-  
-//PARA ABRIR EL FORM CON EL BOTON
-  async getSpents(): Promise<void> {
-  console.log(await this.pagosService.getAll())
 
-   this.spents = await this.pagosService.getAll()
-
-
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['idGroup'] && !changes['idGroup'].isFirstChange()) {
+      this.filterSpentsByGroup();
+    }
   }
+
+  async getSpents(): Promise<void> {
+    console.log('Obteniendo todas las actividades');
+    this.allActivities = await this.pagosService.getAll();
+    this.filterSpentsByGroup();
+  }
+
+  filterSpentsByGroup() {
+    if (this.idGroup) {
+      console.log('Filtrando gastos para el grupo con ID:', this.idGroup);
+      this.spents = this.allActivities.filter(activity => activity.idGroup === this.idGroup);
+      console.log('Gastos filtrados:', this.spents);
+
+    }
+  }
+//PARA ABRIR EL FORM CON EL BOTON
+  // async getSpents(): Promise<void> {
+  //  console.log(await this.pagosService.getAll())
+
+  // this.spents = await this.pagosService.getAll()
+
+  // }
+
+  
 
 
 

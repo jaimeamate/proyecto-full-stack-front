@@ -32,6 +32,12 @@ export class PagosService {
     return lastValueFrom(this.httpClient.post<Iactivity>(`${this.urlBase}/register`, fromValue));
   }
 
+  getByGroup(idGroup: number): Promise<Iactivity[]> {
+    return firstValueFrom(this.httpClient.get<Iactivity[]>(`${this.urlBase}/${idGroup}`));
+  }
+
+  // En tu servicio pagosService
+
 
 
   constructor() { }
