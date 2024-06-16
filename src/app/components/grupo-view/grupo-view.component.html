@@ -65,6 +65,7 @@
                             <input type="text" class="form-control mb-2" [(ngModel)]="inputs[idx]" name="input{{idx}}" required placeholder="Input {{ idx + 1 }}">
                           </div>
                         </div>
+                        <input type="hidden" [(ngModel)]="group.id" name="groupId">
                         <button type="button" class="btn btn-primary" (click)="addInput()">Añadir mail</button>
                         <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Enviar</button>

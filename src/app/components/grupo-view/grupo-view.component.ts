@@ -26,6 +26,7 @@ export class GrupoViewComponent {
   router = inject(Router)
   groupService = inject(GroupService)
   group: IGroup = { 
+     id: 0,
     "name": '',
     "description": ''
   };
@@ -104,7 +105,9 @@ export class GrupoViewComponent {
    */
   sendInputs(form: NgForm) {
     if (form.valid) {
-      this.groupService.sendInputs(this.inputs).pipe(
+      const emails = this.inputs;
+      const groupId = form.value.groupId;
+      this.groupService.sendInputs(emails, groupId).pipe(
         tap(response => {
           Swal.fire({
             title: '¡Éxito!',
