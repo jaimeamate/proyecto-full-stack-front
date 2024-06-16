@@ -56,7 +56,7 @@
                 
                 <ng-template #modalContent let-modal>
                     <div class="modal-header">
-                      <h4 class="modal-title">Añadir mas</h4>
+                      <h4 class="modal-title">Envio de invitaciones a grupo</h4>
                     </div>
                     <div class="modal-body">
                       <form #form="ngForm" (ngSubmit)="sendInputs(form)">
@@ -65,7 +65,7 @@
                             <input type="text" class="form-control mb-2" [(ngModel)]="inputs[idx]" name="input{{idx}}" required placeholder="Input {{ idx + 1 }}">
                           </div>
                         </div>
-                        <button type="button" class="btn btn-primary" (click)="addInput()">Añadir Input</button>
+                        <button type="button" class="btn btn-primary" (click)="addInput()">Añadir mail</button>
                         <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Enviar</button>
                         <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Cerrar</button>
