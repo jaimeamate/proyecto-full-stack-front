@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { IGroup } from '../interfaces/igroup';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class GroupService {
 
   httpClient = inject(HttpClient)
   urlBase = 'http://localhost:3030/api/group'
+  urlMail = 'http://localhost:3030/api/mail/send'
 
   getAll(): Promise<IGroup[]> {
     return firstValueFrom(
@@ -23,17 +24,27 @@ export class GroupService {
     )
   }
 
-  updateById() {
-
+  updateById({id, name}:IGroup) {
+    return firstValueFrom(
+      this.httpClient.patch<any>(`${this.urlBase}/${id}`,{name})
+    )
   }
-
-  deleteById() {
-
+  
+  deleteById(id:number) {
+    return firstValueFrom(
+      this.httpClient.delete<any>(`${this.urlBase}/${id}`)
+    )
   }
 
   insertOne(group:IGroup) {
+    // let name = group.name
     return firstValueFrom(
       this.httpClient.post<IGroup>(`${this.urlBase}/register`,group)
     )
+  }
+
+  sendInputs(emails: string[], groupId: number): Observable<any> {
+    const payload = { emails, groupId };
+    return this.httpClient.post(this.urlMail, payload);
   }
 }

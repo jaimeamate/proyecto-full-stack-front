@@ -1,23 +1,72 @@
-<div class="registro-usuario ">
-    <h2 class="">Registro de Usuario</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre"  required>
+<div class="registro-usuario">
+  <h2>{{ isUpdateMode ? 'Actualizar Datos de Usuario' : 'Registro de Usuario' }}</h2>
+  <form #registroForm="ngForm" (ngSubmit)="onSubmit(registroForm)">
+    <div class="form-group">
+      <label for="first_name">Nombre:</label>
+      <input type="text" id="first_name" name="first_name" [(ngModel)]="usuario.first_name" required #firstName="ngModel">
+      <div *ngIf="firstName.invalid && firstName.touched">
+        <small class="text-danger">Nombre es requerido.</small>
       </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="last_name">Apellido:</label>
+      <input type="text" id="last_name" name="last_name" [(ngModel)]="usuario.last_name" required #lastName="ngModel">
+      <div *ngIf="lastName.invalid && lastName.touched">
+        <small class="text-danger">Apellido es requerido.</small>
       </div>
-      <div class="form-group">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="usuario.email" required email #email="ngModel">
+      <div *ngIf="email.invalid && email.touched">
+        <small class="text-danger" *ngIf="email.errors?.['required']">Email es requerido.</small>
+        <small class="text-danger" *ngIf="email.errors?.['email']">Email no es válido.</small>
       </div>
-      <div class="form-group">
-        <label for="repeatPassword">Repite Contraseña:</label>
-        <input type="password" id="repeatPassword" name="repeatPassword" required>
+    </div>
+    <div class="form-group">
+      <label for="username">Nombre de Usuario:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="usuario.username" required #username="ngModel">
+      <div *ngIf="username.invalid && username.touched">
+        <small class="text-danger">Nombre de Usuario es requerido.</small>
       </div>
-      <button type="submit">Registrarse</button>
-    </form>
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="usuario.password" required minlength="6" #password="ngModel">
+      <div *ngIf="password.invalid && password.touched">
+        <small class="text-danger" *ngIf="password.errors?.['required']">Contraseña es requerida.</small>
+        <small class="text-danger" *ngIf="password.errors?.['minlength']">Contraseña debe tener al menos 6 caracteres.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="repeatPassword">Repite Contraseña:</label>
+      <input type="password" id="repeatPassword" name="repeatPassword" ngModel required minlength="6" #repeatPassword="ngModel" [pattern]="password.value">
+      <div *ngIf="repeatPassword.invalid && repeatPassword.touched">
+        <small class="text-danger" *ngIf="repeatPassword.errors?.['required']">Repite Contraseña es requerida.</small>
+        <small class="text-danger" *ngIf="repeatPassword.errors?.['minlength']">Contraseña debe tener al menos 6 caracteres.</small>
+        <small class="text-danger" *ngIf="repeatPassword.errors?.['pattern']">Las contraseñas no coinciden.</small>
+      </div>
+    </div>
+    <div class="form-buttons">
+      <button class="btn btn-success" [disabled]="registroForm.invalid" type="submit">{{ isUpdateMode ? 'Actualizar' : 'Registrarse' }}</button>
+      @if(isUpdateMode){
+      <button class="btn btn-danger" type="button" (click)="confirmDelete()">Darse de baja</button>
+      }
+    </div>
+  </form>
+</div>
+
+<!-- Modal de confirmación -->
+<ng-template #confirmModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-  
+  <div class="modal-body">
+    ¿Está seguro que desea darse de baja?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">No</button>
+    <button type="button" class="btn btn-danger" (click)="deleteAccount(modal)">Sí</button>
+  </div>
+</ng-template>

@@ -4,7 +4,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 320px;
+  max-width: 440px;
   position: absolute;
   top: calc(40vh - 160px);
   left: 50%;
@@ -33,7 +33,7 @@
     border-radius: 5px;
   }
   
-  .registro-usuario button {
+  /* .registro-usuario button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -42,11 +42,37 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+  } */
   
-  .registro-usuario button:hover {
+  /* .registro-usuario button:hover {
     background-color: #4f3894;
   }
   label{
 color: #555; 
- }
+ } */
+
+ .text-danger {
+  color: red;
+  font-size: 0.8em;
+}
+
+.btn-danger {
+  background-color: red;
+  border-color: red;
+}
+
+.modal-content .btn-danger {
+  background-color: red;
+  border-color: red;
+}
+
+.modal-content .btn-secondary {
+  background-color: grey;
+  border-color: grey;
+}
+
+.registro-usuario .form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

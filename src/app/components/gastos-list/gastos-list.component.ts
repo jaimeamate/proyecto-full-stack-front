@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Input, inject } from '@angular/core';
 import { GastosCardComponent } from '../gastos-card/gastos-card.component';
 import { RouterLink } from '@angular/router';
 import { SaldosCardComponent } from '../saldos-card/saldos-card.component';
+import { Iactivity } from '../../interfaces/iactivity';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CrearGastosComponent } from '../crear-gastos/crear-gastos.component';
+import { PagosService } from '../../services/pagos.service';
 
 @Component({
   selector: 'app-gastos-list',
@@ -11,15 +15,33 @@ import { SaldosCardComponent } from '../saldos-card/saldos-card.component';
   styleUrl: './gastos-list.component.css'
 })
 export class GastosListComponent {
+  pagosService = inject(PagosService)
+
   listaUsuarios = ['Grupo 1','Grupo 2','Grupo 3','Grupo 4','Grupo 5']
   listaGastos = ['Grupo 1','Grupo 2','Grupo 3','Grupo 4','Grupo 5']
+  spent: Iactivity[] = [] 
 
 
-  //1. Metodo Inject--> en los componenetes donde lo vamos a utilizar
-
-  //2. paramentro dentro de la funcion constructor.
-  //constructor(private studentServices: StudentsService){}
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(){
+    this.getSpent()
   }
+  
+//PARA ABRIR EL FORM CON EL BOTON
+  async getSpent(): Promise<void> {
+    this.spent = await this.pagosService.getAll()
+  }
+
+  openGastosModal() {
+    const modalRef = this.modalService.open(CrearGastosComponent);
+    modalRef.componentInstance.spentCreated.subscribe(async () => {
+     await this.getSpent()
+    
+    });
+  }
+
+
+
+
 }

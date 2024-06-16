@@ -1,6 +1,7 @@
 <div class="container mt-4">
-    <form #form="ngForm" (ngSubmit)="createGroup(form)" novalidate>
-      <div class="mb-3">
+  <form #form="ngForm" (ngSubmit)="createGroup(form)" novalidate>
+    <div class="row mb-3">
+      <div class="col-12 p-2">
         <label for="titulo" class="form-label">Titulo</label>
         <span class="text-danger">*</span>
         <input type="text" pattern="(?=.*[a-zA-Z])[\w\s]*" #name="ngModel" class="form-control" [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.dirty" id="titulo" name="name" placeholder="Ingrese el titulo" [(ngModel)]="newGroup.name" minlength="2" maxlength="15" required>
@@ -9,7 +10,7 @@
             @if (name.errors?.['required']) { <span>Required</span> }
             @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
             @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
-          </div>
+          </div> 
         }
       </div>
       <div class="mb-3">
@@ -19,6 +20,6 @@
       <div class="d-flex justify-content-end">
         <button type="submit" class="btn btn-success" [disabled]="form.invalid">Crear</button>
       </div>
-    </form>
+    </div>
+  </form>
 </div>
-  
