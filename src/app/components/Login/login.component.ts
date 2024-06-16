@@ -4,6 +4,8 @@ import { UsuariosService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -51,8 +53,12 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         // Manejo de errores
         console.error('Error en el login:', err);
-        alert('Usuario o contraseña incorrectos');
-      }
+        Swal.fire({
+          title: 'Error',
+          text: 'Usuario o contraseña incorrectos',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });      }
     });
   }
   

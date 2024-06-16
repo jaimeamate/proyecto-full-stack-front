@@ -49,9 +49,34 @@
                             Delete
                         </button>
                     </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="openModal()">Enviar Invitacion</button>
+                    </div>
                 </div>
+                
+                <ng-template #modalContent let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title">Añadir mas</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form #form="ngForm" (ngSubmit)="sendInputs(form)">
+                        <div *ngFor="let input of inputs; let idx = index; trackBy: trackByIndex">
+                          <div>
+                            <input type="text" class="form-control mb-2" [(ngModel)]="inputs[idx]" name="input{{idx}}" required placeholder="Input {{ idx + 1 }}">
+                          </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" (click)="addInput()">Añadir Input</button>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Cerrar</button>
+                    </div>
+                      </form>
+                    </div>
+                  </ng-template>
+                            
             </div>
         </div>
+        
     </section>
     <hr>
     <section>

@@ -1,20 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { GroupService } from '../../services/group.service';
 import { IGroup } from '../../interfaces/igroup';
 import { GastosListComponent } from '../gastos-list/gastos-list.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { catchError, of, tap } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-grupo-view',
   standalone: true,
-  imports: [GastosListComponent,NgbDropdownModule,FormsModule],
+  imports: [GastosListComponent,NgbDropdownModule, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './grupo-view.component.html',
   styleUrl: './grupo-view.component.css'
 })
+
 export class GrupoViewComponent {
+  @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
   groupService = inject(GroupService)
@@ -23,6 +30,18 @@ export class GrupoViewComponent {
     "description": ''
   };
   editing: boolean = false;
+  inputs: string[] = [];
+  formArray: FormArray;
+  formGroup: FormGroup;
+
+
+  constructor(private modalService: NgbModal, private fb: FormBuilder) {
+    this.formArray = this.fb.array([]);
+    this.formGroup = new FormGroup({
+      inputs: this.formArray
+    });
+  }
+
   
   ngOnInit() {
     this.activatedRoute.params.subscribe(async (params:any) => {
@@ -72,4 +91,51 @@ export class GrupoViewComponent {
       })
     }
   }
+  openModal() {
+    this.modalService.open(this.modalContent);
+  }
+
+  addInput() {
+    this.inputs.push('');
+  }
+  /**
+   * Aqui uso pipe para encadenar los multiples emails que se pueden enviar del modal.
+   * Uso tap para enviar cada email
+   */
+  sendInputs(form: NgForm) {
+    if (form.valid) {
+      this.groupService.sendInputs(this.inputs).pipe(
+        tap(response => {
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Los inputs se han enviado correctamente.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          this.modalService.dismissAll();
+        }),
+        catchError(error => {
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al enviar los inputs.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          console.error('Error sending inputs:', error);
+          return of(null);
+        })
+      ).subscribe();
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: 'Por favor, rellena todos los campos.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+    // Función trackBy para mejorar el rendimiento de *ngFor
+    trackByIndex(index: number, item: any): any {
+      return index;
+    }
 }
