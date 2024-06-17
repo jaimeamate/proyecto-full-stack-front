@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, inject, input } from '@angular/core';
+import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
@@ -15,21 +15,16 @@ import { Iactivity } from '../../interfaces/iactivity';
 
 export class CrearGastosComponent {
   @Output() spentCreated = new EventEmitter<void>();
+  @Input() idGroup!: number ;
 
   spentsForm: FormGroup;
   pagosService = inject(PagosService)
   groupService = inject(GroupService)
   router = inject(Router)
   activateRoute = inject(ActivatedRoute)
-  newSpent: Iactivity = {
-    name: "",
-    amount: 0,
-    date: "",
-    idGroup: 0,
-    type: ""
-  };
+  newSpent: Iactivity[] = []
 
-
+  
   // public activeModal: NgbActiveModal
     
 
@@ -54,19 +49,44 @@ export class CrearGastosComponent {
     }, [])
   }
 
-  ngOnInit(): void {
-
-
+  ngonInit(): void {
+    this.getDataForm();
   }
 
-    getDataForm(): void {
+  async getDataForm() {
+    if (this.spentsForm.valid) {
+      const newSpent: Iactivity = { ...this.spentsForm.value, idGroup: this.idGroup };
+      console.log(this.idGroup) // Cambiado para crear un objeto en lugar de un arreglo
+      try {
+        await this.pagosService.insert(newSpent); // Pasamos directamente el objeto
+        console.log('Gasto creado con éxito');
+        this.spentCreated.emit();
+        this.spentsForm.reset();
+      } catch (error) {
+        console.error('Error al crear el gasto', error);
+      }
+    }
+  }
+
+  // async getDataForm() {
+  //   console.log(this.idGroup)
+  //   console.log(this.spentsForm.value)
+  //   this.newSpent= { ...this.newSpent, ...this.spentsForm.value  };
+  //   console.log(this.newSpent)
+  //   if (this.spentsForm.valid) {
+  //     // this.newSpent = { ...this.newSpent, ...this.spentsForm.value, idGroup: this.idGroup };
+  //     try {
+  //       await this.pagosService.insert(this.newSpent);
+  //       console.log('Gasto creado con éxito');
+  //       this.spentsForm.reset();
+        
+  //     } catch (error) {
+  //       console.error('Error al crear el gasto', error);
+  //     }
+  //   }
+  // }
              
-        // Call the appropriate service method to insert the data
-        this.pagosService.insert(this.newSpent).then(() => {
-          // Emit an event to notify the parent component that the data has been created
-          this.spentCreated.emit();
-        });
-          }
+      
   
 
   checkControl(formControlName: string, validador: string): boolean | undefined {

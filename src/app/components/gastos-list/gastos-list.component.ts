@@ -10,7 +10,7 @@ import { PagosService } from '../../services/pagos.service';
 @Component({
   selector: 'app-gastos-list',
   standalone: true,
-  imports: [GastosCardComponent,RouterLink,SaldosCardComponent],
+  imports: [GastosCardComponent,RouterLink,SaldosCardComponent,CrearGastosComponent],
   templateUrl: './gastos-list.component.html',
   styleUrl: './gastos-list.component.css'
 })
@@ -19,8 +19,8 @@ export class GastosListComponent {
   spents: Iactivity[] = [] 
   allActivities: Iactivity[] = []
 
-
   @Input() idGroup!: number
+  isGastosModalOpen = false;
 
   constructor(private modalService: NgbModal) { }
 
@@ -57,16 +57,23 @@ export class GastosListComponent {
   // }
 
   
-
-
-
   openGastosModal() {
-    const modalRef = this.modalService.open(CrearGastosComponent);
-    modalRef.componentInstance.spentCreated.subscribe(async () => {
-     await this.getSpents()
-    
-    });
+    this.isGastosModalOpen = true;
   }
 
-
+  closeGastosModal() {
+    this.isGastosModalOpen = false;
+  }
 }
+
+
+  // openGastosModal(idGroup: number) {
+  //   const modalRef = this.modalService.open(CrearGastosComponent);
+  //   modalRef.componentInstance.spentCreated.subscribe(async () => {
+  //    await this.getSpents()
+    
+  //   });
+  // }
+
+
+// }

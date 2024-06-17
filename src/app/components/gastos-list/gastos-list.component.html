@@ -25,3 +25,6 @@
       <button class="btn btn-success rounded-pill float-end fs-3 px-4 mb-3" (click)="openGastosModal()">Nuevo gasto</button>
     </div>
   
+    @if (isGastosModalOpen) {
+      <app-crear-gastos [idGroup]="idGroup" (close)="closeGastosModal()"></app-crear-gastos>
+    }os>
