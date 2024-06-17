@@ -43,8 +43,8 @@ export class GroupService {
     )
   }
 
-  sendInputs(emails: string[], groupId: number): Observable<any> {
-    const payload = { emails, groupId };
+  sendInputs(payload: { email: string, groupId: number }): Observable<any> {
+    console.log(payload);
     return this.httpClient.post(this.urlMail, payload);
   }
 }

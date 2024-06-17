@@ -5,7 +5,7 @@ import { GroupService } from '../../services/group.service';
 import { IGroup } from '../../interfaces/igroup';
 import { GastosListComponent } from '../gastos-list/gastos-list.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, NgForm, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of, tap } from 'rxjs';
@@ -24,7 +24,6 @@ export class GrupoViewComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
-  groupService = inject(GroupService)
   group: IGroup = { 
      id: 0,
     "name": '',
@@ -32,16 +31,12 @@ export class GrupoViewComponent {
   };
   editing: boolean = false;
   inputs: string[] = [];
-  formArray: FormArray;
-  formGroup: FormGroup;
+  email: string = '';
 
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
-    this.formArray = this.fb.array([]);
-    this.formGroup = new FormGroup({
-      inputs: this.formArray
-    });
-  }
+
+  constructor(private modalService: NgbModal, private groupService: GroupService) {}
+
 
   
   ngOnInit() {
@@ -93,7 +88,14 @@ export class GrupoViewComponent {
     }
   }
   openModal() {
-    this.modalService.open(this.modalContent);
+    const modalRef = this.modalService.open(this.modalContent);
+    modalRef.result.finally(()=>{
+      this.clearInput();
+    })
+  }
+
+  clearInput() {
+    this.email = '';
   }
 
   addInput() {
@@ -105,9 +107,8 @@ export class GrupoViewComponent {
    */
   sendInputs(form: NgForm) {
     if (form.valid) {
-      const emails = this.inputs;
-      const groupId = form.value.groupId;
-      this.groupService.sendInputs(emails, groupId).pipe(
+      const payload = { email: this.email, groupId: form.value.groupId };
+      this.groupService.sendInputs(payload).pipe(
         tap(response => {
           Swal.fire({
             title: '¡Éxito!',
