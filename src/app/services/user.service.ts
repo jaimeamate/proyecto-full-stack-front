@@ -9,6 +9,7 @@ import { Usuario } from '../interfaces/iusuario';
 export class UsuariosService {
 
   private authUrl: string = 'http://localhost:3030/api/auth/login';
+  private registerUrl: string = 'http://localhost:3030/api/auth/register';
   private usersUrl: string = 'http://localhost:3030/api/user';
 
 
@@ -19,8 +20,15 @@ export class UsuariosService {
     return this.httpClient.post<any>(this.authUrl, credentials);
   }
 
-  register(newUser: Usuario): Observable<any> {
-    return this.httpClient.post<any>(this.authUrl, newUser);
+  register(firstName: string, lastName: string, phoneNumber: string, email: string, password: string, ind_baja: number): Observable<any> {
+    return this.httpClient.post<any>(this.registerUrl, {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      password,
+      ind_baja
+    });
   }
     // Nuevo método para actualizar el campo ind_baja
     updateUserIndBaja(id: number, indBaja: boolean): Observable<any> {

@@ -7,6 +7,7 @@ import { Usuario } from '../../interfaces/iusuario';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 
 
 // import { BrowserModule } from '@angular/platform-browser';
@@ -55,11 +56,23 @@ export class RegistroComponent {
   //   // Aquí iría la lógica para enviar los datos del usuario al servidor
   //   console.log('Usuario registrado:', this.usuario);
   // }
-  onSubmit(form: any) {
-    if (form.valid) {
-      console.log('Form Submitted!', form.value);
-    } else {
-      console.log('Form not valid');
+  onSubmit(registroForm: NgForm) {
+    if (registroForm.valid) {
+      // Asignar valores predeterminados en caso de que alguna propiedad sea undefined
+      const safeFirstName = this.usuario.first_name ?? '';
+      const safeLastName = this.usuario.last_name ?? '';
+      const safeEmail = this.usuario.email ?? '';
+      const safePassword = this.usuario.password ?? '';
+      const ind_baja = 0;
+      const phoneNumber = ""; // Asumiendo que no hay un campo phoneNumber en el formulario actual
+        this.usuariosService.register(safeFirstName, safeLastName, phoneNumber, safeEmail, safePassword, ind_baja).subscribe({
+          next: (response) => {
+            console.log('Registro exitoso', response);
+          },
+          error: (error) => {
+            console.error('Error en el registro', error);
+          }
+        });
     }
   }
 
@@ -69,7 +82,8 @@ export class RegistroComponent {
 
   deleteAccount(modal: NgbModalRef) {
     // Actualizar el campo `ind_baja` a `true`
-    this.usuariosService.updateUserIndBaja(this.usuario.user_id, true).subscribe({
+    let user_id = this.usuario.user_id ?? -1;
+    this.usuariosService.updateUserIndBaja(user_id, true).subscribe({
       next: (response) => {
         console.log('Usuario dado de baja:', response);
         modal.close(); // Cierro el modal
