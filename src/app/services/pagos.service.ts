@@ -21,8 +21,10 @@ export class PagosService {
   }
 
   update(fromValue:Iactivity){
-    return lastValueFrom(this.httpClient.put<Iactivity>(`${this.urlBase}/${fromValue.id}`,fromValue));
+    return lastValueFrom(this.httpClient.patch<Iactivity>(`${this.urlBase}/${fromValue.id}`,fromValue));
   }
+
+
 
   delete(id:number){
     return lastValueFrom(this.httpClient.delete<Iactivity>(`${this.urlBase}/${id}`));

@@ -75,7 +75,7 @@ export class GrupoViewComponent {
           text: `'${this.group.name}' has been deleted!`,
           icon: "success"
         });
-        this.router.navigate(['/home'])
+        this.router.navigate(['/group/:id'])
       })
     }
   }
