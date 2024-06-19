@@ -10,7 +10,7 @@ import { authGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'home', component: ListaGruposComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistroComponent },
@@ -18,5 +18,5 @@ export const routes: Routes = [
   { path: 'creaGrupos', component: CrearGruposComponent, canActivate: [authGuard] },   
   { path: 'group/:id', component: GrupoViewComponent, canActivate: [authGuard]},
   { path: 'listaGastos', component: GastosListComponent, canActivate: [authGuard]},
-  { path: "**", redirectTo: 'home' }
+  { path: "**", redirectTo: 'login' }
 ];

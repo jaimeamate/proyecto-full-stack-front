@@ -49,9 +49,32 @@
                             Delete
                         </button>
                     </div>
+                    <div class="pt-2">
+                        <button type="button" class="btn btn-primary" (click)="openModal()">Enviar Invitacion</button>
+                    </div>
                 </div>
+                
+                <ng-template #modalContent let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title">Envio de invitaciones a grupo</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form #form="ngForm" (ngSubmit)="sendInputs(form)">
+                        <div>
+                          <input type="email" class="form-control mb-2" [(ngModel)]="email" name="email" required placeholder="Correo Electrónico">
+                        </div>
+                        <input type="hidden" [(ngModel)]="group.id" name="groupId">
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-success">Enviar</button>
+                          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-template>
+                            
             </div>
         </div>
+        
     </section>
     <hr>
     <section>
