@@ -25,10 +25,9 @@ export class GrupoViewComponent {
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
   group: IGroup = { 
-     id: 0,
+    id: 0,
     "name": '',
-    "description": '',
-    "id": 0
+    "description": ''
   };
   editing: boolean = false;
   inputs: string[] = [];

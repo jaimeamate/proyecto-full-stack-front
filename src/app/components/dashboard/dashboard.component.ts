@@ -25,21 +25,22 @@ constructor() {
 ngOnInit() {
   console.log('idGroup:', this.idGroup); // Verificar el id del grupo recibido
 
-  if (this.idGroup !== undefined && this.idGroup !== null) {
-    this.pagosService.getByGroup(this.idGroup).then(activities => {
-      console.log('Activities received:', activities); // Verificar los datos obtenidos
-      this.totalAmount = activities.reduce((sum, activity) => {
-        const amount = Number(activity.amount);
-        console.log('Current amount:', amount, 'Current sum:', sum);
-        return sum + amount;
-      }, 0);
-      console.log('Total Amount:', this.totalAmount); // Verificar el total calculado
-    }).catch(error => {
-      console.error('Error fetching activities:', error);
-    });
-  } else {
-    console.error('Invalid idGroup:', this.idGroup);
-  }
+//   if (this.idGroup !== undefined && this.idGroup !== null) {
+//     this.pagosService.getByGroup(this.idGroup).then(activities => {
+//       console.log('Activities received:', activities); // Verificar los datos obtenidos
+//       this.totalAmount = activities.reduce((sum, activity) => {
+//         const amount = Number(activity.amount);
+//         console.log('Current amount:', amount, 'Current sum:', sum);
+//         return sum + amount;
+//       }, 0);
+//       console.log('Total Amount:', this.totalAmount); // Verificar el total calculado
+//     }).catch(error => {
+//       console.error('Error fetching activities:', error);
+//     });
+//   } else {
+//     console.error('Invalid idGroup:', this.idGroup);
+//   }
+// }
 }
 }
 
