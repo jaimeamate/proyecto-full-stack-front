@@ -14,6 +14,8 @@ import { Iactivity } from '../../interfaces/iactivity';
 })
 
 export class CrearGastosComponent {
+  @Output() close = new EventEmitter<void>();
+
   @Output() spentCreated = new EventEmitter<void>();
   @Input() idGroup!: number ;
 
@@ -58,7 +60,10 @@ export class CrearGastosComponent {
       const newSpent: Iactivity = { ...this.spentsForm.value, idGroup: this.idGroup };
       console.log(this.idGroup) // Cambiado para crear un objeto en lugar de un arreglo
       try {
-        await this.pagosService.insert(newSpent); // Pasamos directamente el objeto
+        await this.pagosService.insert(newSpent).then(Response =>{
+          this.spentsForm.reset();
+          this.spentCreated.emit();
+        }); // Pasamos directamente el objeto
         console.log('Gasto creado con éxito');
         this.spentCreated.emit();
         this.spentsForm.reset();
@@ -68,26 +73,12 @@ export class CrearGastosComponent {
     }
   }
 
-  // async getDataForm() {
-  //   console.log(this.idGroup)
-  //   console.log(this.spentsForm.value)
-  //   this.newSpent= { ...this.newSpent, ...this.spentsForm.value  };
-  //   console.log(this.newSpent)
-  //   if (this.spentsForm.valid) {
-  //     // this.newSpent = { ...this.newSpent, ...this.spentsForm.value, idGroup: this.idGroup };
-  //     try {
-  //       await this.pagosService.insert(this.newSpent);
-  //       console.log('Gasto creado con éxito');
-  //       this.spentsForm.reset();
-        
-  //     } catch (error) {
-  //       console.error('Error al crear el gasto', error);
-  //     }
-  //   }
-  // }
+  
              
       
-  
+  cerrarModal() {
+    this.close.emit(); // Esto notificará al componente padre
+  }
 
   checkControl(formControlName: string, validador: string): boolean | undefined {
     return this.spentsForm.get(formControlName)?.hasError(validador) && this.spentsForm.get(formControlName)?.touched

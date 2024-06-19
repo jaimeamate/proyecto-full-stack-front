@@ -9,7 +9,8 @@
     </thead>
   </table> -->
 
-    
+  <app-dashboard [idGroup]="idGroup" class="p-4"></app-dashboard>
+
       @for (spent of spents; track spent.id) {   
         <div class="">
           <app-gastos-card [miSpent]="spent" class="p-4"></app-gastos-card>
@@ -28,4 +29,4 @@
   
     @if (isGastosModalOpen) {
       <app-crear-gastos [idGroup]="idGroup" (close)="closeGastosModal()"></app-crear-gastos>
-    }os>
+    }

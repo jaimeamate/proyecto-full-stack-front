@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom, BehaviorSubject } from 'rxjs';
 import { Iactivity } from '../interfaces/iactivity';
 
 
@@ -11,6 +11,7 @@ export class PagosService {
   httpClient = inject(HttpClient);
   urlBase = 'http://localhost:3030/api/activity';
 
+ 
 
   getAll(): Promise<Iactivity[]> { 
     return firstValueFrom(this.httpClient.get<Iactivity[]>(this.urlBase));
@@ -42,5 +43,4 @@ export class PagosService {
 
 
 
-  constructor() { }
 }

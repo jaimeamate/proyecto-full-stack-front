@@ -6,11 +6,12 @@ import { Iactivity } from '../../interfaces/iactivity';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CrearGastosComponent } from '../crear-gastos/crear-gastos.component';
 import { PagosService } from '../../services/pagos.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-gastos-list',
   standalone: true,
-  imports: [GastosCardComponent,RouterLink,SaldosCardComponent,CrearGastosComponent],
+  imports: [GastosCardComponent,RouterLink,SaldosCardComponent,CrearGastosComponent,DashboardComponent],
   templateUrl: './gastos-list.component.html',
   styleUrl: './gastos-list.component.css'
 })
@@ -49,12 +50,7 @@ export class GastosListComponent {
     }
   }
 //PARA ABRIR EL FORM CON EL BOTON
-  // async getSpents(): Promise<void> {
-  //  console.log(await this.pagosService.getAll())
-
-  // this.spents = await this.pagosService.getAll()
-
-  // }
+ 
 
   
   openGastosModal() {
@@ -62,6 +58,10 @@ export class GastosListComponent {
   }
 
   closeGastosModal() {
+    this.isGastosModalOpen = false;
+  }
+
+  handleFormSubmitted() {
     this.isGastosModalOpen = false;
   }
 }

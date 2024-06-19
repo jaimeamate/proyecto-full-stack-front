@@ -102,7 +102,7 @@ export class GastosCardComponent {
             icon: 'success'
           });
           // Redirigir o actualizar la lista de gastos aquí
-          this.spentCreated.emit(this.miSpent.id);
+          this.spentCreated.emit();
 
         }).catch((err) => {
           console.error('Error deleting spent:', err);
