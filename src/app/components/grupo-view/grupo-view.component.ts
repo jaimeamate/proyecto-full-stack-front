@@ -107,12 +107,12 @@ export class GrupoViewComponent {
    */
   sendInputs(form: NgForm) {
     if (form.valid) {
-      const payload = { email: this.email, groupId: form.value.groupId };
+      const payload = { to: this.email, groupId: form.value.groupId, user: localStorage.getItem('email') };
       this.groupService.sendInputs(payload).pipe(
         tap(response => {
           Swal.fire({
             title: '¡Éxito!',
-            text: 'Los inputs se han enviado correctamente.',
+            text: 'Mail con invitación enviado con exito!',
             icon: 'success',
             confirmButtonText: 'OK'
           });
@@ -121,7 +121,7 @@ export class GrupoViewComponent {
         catchError(error => {
           Swal.fire({
             title: 'Error',
-            text: 'Hubo un problema al enviar los inputs.',
+            text: 'Hubo un problema al enviar el mail.',
             icon: 'error',
             confirmButtonText: 'OK'
           });
