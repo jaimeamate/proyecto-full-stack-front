@@ -6,6 +6,7 @@ import { IGroup } from '../../interfaces/igroup';
 import { CrearGruposComponent } from "../crear-grupos/crear-grupos.component";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { COLORS } from '../../utils/colors';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { COLORS } from '../../utils/colors';
     imports: [RouterLink, GrupoItemComponent, CrearGruposComponent]
 })
 export class ListaGruposComponent {
+  authService = inject(AuthService)
   groupService = inject(GroupService)
   groups: IGroup[] = []
   colors: string[] = COLORS  
@@ -27,8 +29,9 @@ export class ListaGruposComponent {
   }
 
   async getGroups(): Promise<void> {
+    const {user_id:userId} = this.authService.getUserData()
     // console.log(await this.groupService.getAll())
-    this.groups = await this.groupService.getAll()
+    this.groups = await this.groupService.getAll(userId)
   }
 
   getColorGroup(index: number) {

@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { IGroup } from '../../interfaces/igroup';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-crear-grupos',
@@ -15,6 +16,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class CrearGruposComponent {
   @Output() groupCreated = new EventEmitter<void>();
 
+  authService = inject(AuthService)
   groupService = inject(GroupService)
   router = inject(Router)
   newGroup: IGroup = {
@@ -23,9 +25,10 @@ export class CrearGruposComponent {
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  createGroup(form: NgForm): void { 
+  createGroup(form: NgForm): void {
+    const {user_id: userID} = this.authService.getUserData() 
     this.newGroup.name.trim()
-    this.groupService.insertOne(this.newGroup).then(response => {
+    this.groupService.insertOne(this.newGroup, userID).then(response => {
       form.resetForm()
       this.groupCreated.emit();
       this.activeModal.close();

@@ -12,9 +12,9 @@ export class GroupService {
   urlBase = 'http://localhost:3030/api/group'
   urlMail = 'http://localhost:3030/api/mail/send'
 
-  getAll(): Promise<IGroup[]> {
+  getAll(userId: number): Promise<IGroup[]> {
     return firstValueFrom(
-      this.httpClient.get<IGroup[]>(this.urlBase)
+      this.httpClient.get<IGroup[]>(`${this.urlBase}/users/${userId}/group`)
     )
   }
 
@@ -36,10 +36,10 @@ export class GroupService {
     )
   }
 
-  insertOne(group:IGroup) {
+  insertOne(group: IGroup, userId: number) {
     // let name = group.name
     return firstValueFrom(
-      this.httpClient.post<IGroup>(`${this.urlBase}/register`,group)
+      this.httpClient.post<IGroup>(`${this.urlBase}/register/${userId}`,group)
     )
   }
 
