@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 // import { BrowserModule } from '@angular/platform-browser';
@@ -69,9 +70,21 @@ export class RegistroComponent {
         this.usuariosService.register(safeFirstName, safeLastName, phoneNumber, safeEmail, safePassword, ind_baja).subscribe({
           next: (response) => {
             console.log('Registro exitoso', response);
+            Swal.fire({
+              title: 'Éxito',
+              text: 'El registro ha sido exitoso',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
           },
           error: (error) => {
             console.error('Error en el registro', error);
+            Swal.fire({
+              title: 'Error',
+              text:  `Ha ocurrido un error en el registro ${error}`,
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
           }
         });
       } else {
