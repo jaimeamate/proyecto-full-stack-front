@@ -20,13 +20,13 @@ export class GastosListComponent {
   spents: Iactivity[] = [] 
   allActivities: Iactivity[] = []
 
-  @Input() idGroup!: number
+  @Input() idGroup!: number | undefined
   isGastosModalOpen = false;
 
   constructor(private modalService: NgbModal) { }
 
-  ngOnInit(): void {
-    this.getSpents()
+  async ngOnInit(): Promise<void> {
+    await this.getSpents()
   }
 
   ngOnChanges(changes: SimpleChanges) {

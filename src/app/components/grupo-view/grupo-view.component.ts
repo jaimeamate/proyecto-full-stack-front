@@ -24,18 +24,20 @@ export class GrupoViewComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
-  group: IGroup = { 
-    id: 0,
-    "name": '',
-    "description": ''
-  };
+  group!: IGroup
   editing: boolean = false;
   inputs: string[] = [];
   email: string = '';
 
 
 
-  constructor(private modalService: NgbModal, private groupService: GroupService) {}
+  constructor(private modalService: NgbModal, private groupService: GroupService) {
+    this.group = { 
+      "id": 0,
+      "name": '',
+      "description": ''
+    };
+  }
 
 
   
