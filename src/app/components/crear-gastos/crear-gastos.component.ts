@@ -17,7 +17,7 @@ export class CrearGastosComponent {
   @Output() close = new EventEmitter<void>();
 
   @Output() spentCreated = new EventEmitter<void>();
-  @Input() idGroup!: number ;
+  @Input() idGroup!: number | undefined;
 
   spentsForm: FormGroup;
   pagosService = inject(PagosService)

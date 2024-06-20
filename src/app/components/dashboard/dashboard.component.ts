@@ -11,7 +11,7 @@ import { PagosService } from '../../services/pagos.service';
 })
 export class DashboardComponent {
   @Input() miSpent!: Iactivity;
-  @Input() idGroup!: number; // Recibe el id del grupo como input
+  @Input() idGroup!: number | undefined; // Recibe el id del grupo como input
 
 
 
