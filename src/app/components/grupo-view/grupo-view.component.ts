@@ -25,7 +25,7 @@ export class GrupoViewComponent {
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
   group: IGroup = { 
-     id: 0,
+    id: 0,
     "name": '',
     "description": ''
   };
@@ -40,6 +40,7 @@ export class GrupoViewComponent {
 
   
   ngOnInit() {
+
     this.activatedRoute.params.subscribe(async (params:any) => {
       const id = params.id
       try {
@@ -49,6 +50,8 @@ export class GrupoViewComponent {
       }
     })
   }
+
+ 
 
   editMode() {
     this.editing = !this.editing
@@ -83,7 +86,7 @@ export class GrupoViewComponent {
           text: `'${this.group.name}' has been deleted!`,
           icon: "success"
         });
-        this.router.navigate(['/home'])
+        this.router.navigate(['/group/:id'])
       })
     }
   }
