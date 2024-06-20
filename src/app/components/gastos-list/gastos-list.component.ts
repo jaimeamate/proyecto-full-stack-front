@@ -36,7 +36,7 @@ export class GastosListComponent {
   openGastosModal() {
     const modalRef = this.modalService.open(CrearGastosComponent);
     modalRef.componentInstance.spentCreated.subscribe(async () => {
-     await this.getSpent()
+    await this.getSpent()
     
     });
   }

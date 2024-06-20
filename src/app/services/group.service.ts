@@ -43,6 +43,12 @@ export class GroupService {
     )
   }
 
+  getGroupMembers(idGroup:number){
+    return firstValueFrom(
+      this.httpClient.get<any>(`${this.urlBase}/${idGroup}/users`)
+    )
+  }
+
   sendInputs(payload: { email: string, groupId: number }): Observable<any> {
     console.log(payload);
     return this.httpClient.post(this.urlMail, payload);
