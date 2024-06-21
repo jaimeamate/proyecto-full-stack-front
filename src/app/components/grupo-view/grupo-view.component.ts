@@ -24,22 +24,25 @@ export class GrupoViewComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
   activatedRoute = inject(ActivatedRoute)
   router = inject(Router)
-  group: IGroup = { 
-     id: 0,
-    "name": '',
-    "description": ''
-  };
+  group!: IGroup
   editing: boolean = false;
   inputs: string[] = [];
   email: string = '';
 
 
 
-  constructor(private modalService: NgbModal, private groupService: GroupService) {}
+  constructor(private modalService: NgbModal, private groupService: GroupService) {
+    this.group = { 
+      "id": 0,
+      "name": '',
+      "description": ''
+    };
+  }
 
 
   
   ngOnInit() {
+
     this.activatedRoute.params.subscribe(async (params:any) => {
       const id = params.id
       try {
@@ -49,6 +52,8 @@ export class GrupoViewComponent {
       }
     })
   }
+
+ 
 
   editMode() {
     this.editing = !this.editing
@@ -83,7 +88,7 @@ export class GrupoViewComponent {
           text: `'${this.group.name}' has been deleted!`,
           icon: "success"
         });
-        this.router.navigate(['/home'])
+        this.router.navigate(['/group/:id'])
       })
     }
   }

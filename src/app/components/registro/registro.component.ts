@@ -66,6 +66,7 @@ export class RegistroComponent {
       const safePassword = this.usuario.password ?? '';
       const ind_baja = 0;
       const phoneNumber = ""; // Asumiendo que no hay un campo phoneNumber en el formulario actual
+      if(!this.isUpdateMode){
         this.usuariosService.register(safeFirstName, safeLastName, phoneNumber, safeEmail, safePassword, ind_baja).subscribe({
           next: (response) => {
             console.log('Registro exitoso', response);
@@ -87,6 +88,17 @@ export class RegistroComponent {
             });
           }
         });
+      } else {
+        const safeuserId = this.usuario.user_id ?? '';
+        this.usuariosService.update(safeFirstName, safeLastName, phoneNumber, safeEmail, safePassword, ind_baja, safeuserId).subscribe({
+          next: (response) => {
+            console.log('Registro exitoso', response);
+          },
+          error: (error) => {
+            console.error('Error en el registro', error);
+          }
+        });
+      }
     }
   }
 

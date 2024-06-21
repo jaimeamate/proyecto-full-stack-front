@@ -79,6 +79,8 @@
     <hr>
     <section>
         <!-- <p>AQUI VAN LOS LOGS DE GASTOS</p> -->
-        <app-gastos-list></app-gastos-list>
+        @if(group.id ?? 0){
+            <app-gastos-list [idGroup]="group.id"></app-gastos-list>
+        }
     </section>
 </main>

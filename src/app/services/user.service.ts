@@ -34,4 +34,16 @@ export class UsuariosService {
     updateUserIndBaja(id: number, indBaja: boolean): Observable<any> {
       return this.httpClient.patch<any>(`${this.usersUrl}/${id}`, { ind_baja: indBaja });
     }
+
+    update(firstName: string, lastName: string, phoneNumber: string, email: string, password: string, ind_baja: number, user_id: number): Observable<any> {
+      return this.httpClient.put<any>(`${this.usersUrl}/${user_id}`, {
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        password,
+        ind_baja
+      });
+    }
+    
 }
