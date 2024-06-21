@@ -11,7 +11,7 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Shared Journey';
+  title = 'Pay Shared';
 
   constructor(private router: Router, public authService: AuthService) { }
   ngOnInit(): void {}

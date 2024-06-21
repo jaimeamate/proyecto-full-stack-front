@@ -1,26 +1,16 @@
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark px-2">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['/home']"><img src="../assets/icono.png" alt="Logo"></a>
+    <div class="navbar-brand" [routerLink]="['/home']">
+      <img class="rounded rounded-circle" src="../assets/unido.png" alt="Logo">
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/home']">Inicio</a>
+          <a class="nav-link" [routerLink]="['/home']">Home</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/listaGrupos']">Grupos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/creaGrupos']">Crear Grupo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/listaGastos']">Gastos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/crearGastos']">Crear Gasto</a>
-        </li> -->
         @if(!authService.isLoggedIn()){
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['/login']">Login</a>
@@ -28,7 +18,7 @@
         }
         @if(authService.isLoggedIn()){
         <li class="nav-item">
-          <a class="nav-link" (click)="goToProfile()">Bienvenido, {{ authService.getUserName() }}</a>
+          <a class="nav-link" (click)="goToProfile()">Welcome, {{ authService.getUserName() }}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="onLogout()"><i class="fas fa-sign-out-alt"></i></a>
