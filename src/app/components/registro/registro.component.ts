@@ -76,12 +76,13 @@ export class RegistroComponent {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
+            this.router.navigate(['/login']);
           },
           error: (error) => {
             console.error('Error en el registro', error);
             Swal.fire({
               title: 'Error',
-              text:  `Ha ocurrido un error en el registro ${error}`,
+              text:  `Ha ocurrido un error en el registro `,
               icon: 'error',
               confirmButtonText: 'Aceptar'
             });
