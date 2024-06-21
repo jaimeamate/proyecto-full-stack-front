@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UsuariosService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
@@ -21,8 +21,9 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
+
   constructor(private usuariosService: UsuariosService, private router: Router, private authService: AuthService) { }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   onSubmit() {
     this.usuariosService.login(this.credentials).subscribe({
       next: (response) => {
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit {
           this.onLogout();
           return;
         }
+        this.usuariosService.authEventEmiter.emit()
         // Redirige a la página principal o a otra página después del login
         this.router.navigate(['/home']);
       },

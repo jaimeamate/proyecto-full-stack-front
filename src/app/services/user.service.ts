@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, first, firstValueFrom } from 'rxjs';
 import { Usuario } from '../interfaces/iusuario';
@@ -7,6 +7,7 @@ import { Usuario } from '../interfaces/iusuario';
   providedIn: 'root'
 })
 export class UsuariosService {
+  @Output() authEventEmiter: EventEmitter<void> = new EventEmitter()
 
   private authUrl: string = 'http://localhost:3030/api/auth/login';
   private registerUrl: string = 'http://localhost:3030/api/auth/register';

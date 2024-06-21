@@ -13,15 +13,18 @@ import { UsuariosService } from './services/user.service';
 })
 export class AppComponent {
   title = 'Pay Shared';
-  user: any = this.authService.getUserData()
+  user: any
 
   constructor(private router: Router, public authService: AuthService, public userService: UsuariosService) {
+    this.user = this.authService.getUserData()
   }
   async ngOnInit() {
-    console.log(this.user)
-    this.user = await this.userService.getUserById(this.user.user_id)
-    console.log(this.user)
+    this.userService.authEventEmiter.subscribe(async()=>{
+      this.user = this.authService.getUserData()
+      this.user = await this.userService.getUserById(this.user.user_id)
+    })
   }
+
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']);
