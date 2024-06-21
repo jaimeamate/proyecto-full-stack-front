@@ -18,8 +18,10 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 export class GastosListComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
   pagosService = inject(PagosService)
-  spents: Iactivity[] = [] 
+  spents: Iactivity[] = []
+  spentsPayments!: number[]
   allActivities: Iactivity[] = []
+  listLoaded: boolean = false
 
   @Input() idGroup!: number | undefined
   isGastosModalOpen = false;
@@ -37,6 +39,7 @@ export class GastosListComponent {
   }
 
   async getSpents(): Promise<void> {
+    this.listLoaded = false
     console.log('Obteniendo todas las actividades');
     this.allActivities = await this.pagosService.getAll();
     this.filterSpentsByGroup();
@@ -46,6 +49,15 @@ export class GastosListComponent {
     if (this.idGroup) {
       console.log('Filtrando gastos para el grupo con ID:', this.idGroup);
       this.spents = this.allActivities.filter(activity => activity.idGroup === this.idGroup);
+      console.log(this.spents.length)
+      console.log(this.spents)
+      if(this.spents.length>0){
+        this.spentsPayments = this.spents.map((s):number=>{
+          return parseFloat(s.amount.toString())
+        })
+        this.listLoaded = true
+      }
+      console.log(this.spentsPayments)
       console.log('Gastos filtrados:', this.spents);
     }
 

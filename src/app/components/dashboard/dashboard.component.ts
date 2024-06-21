@@ -11,20 +11,27 @@ import { PagosService } from '../../services/pagos.service';
 })
 export class DashboardComponent {
   @Input() miSpent!: Iactivity;
+  @Input() payments: number[] = [];
   @Input() idGroup!: number | undefined; // Recibe el id del grupo como input
+  initialLength = 0
 
 
 
 pagosService = inject(PagosService);
 totalAmount: number = 0;
 
-constructor() { 
+constructor() {
+  console.log(this.payments.length)
+  this.initialLength = this.payments.length
   console.log('Constructor - idGroup:', this.idGroup);
 }
 
 ngOnInit() {
+  console.log(this.payments)
+  this.calculateTotal()
   console.log('idGroup:', this.idGroup); // Verificar el id del grupo recibido
 
+  console.log(this.totalAmount)
 //   if (this.idGroup !== undefined && this.idGroup !== null) {
 //     this.pagosService.getByGroup(this.idGroup).then(activities => {
 //       console.log('Activities received:', activities); // Verificar los datos obtenidos
@@ -41,6 +48,15 @@ ngOnInit() {
 //     console.error('Invalid idGroup:', this.idGroup);
 //   }
 // }
+}
+calculateTotal(){
+  console.log(this.payments)
+  if(this.payments && this.initialLength!==this.payments.length){
+    this.totalAmount = this.payments.reduce(
+      (acc,crr) => acc + crr, 0
+    )
+    this.initialLength = this.payments.length
+  }
 }
 }
 

@@ -1,4 +1,4 @@
-<section class="container ">
+<section class="container">
   <!-- <table class="table">
     <thead>
       <tr>
@@ -8,7 +8,11 @@
       </tr>
     </thead>
   </table> -->
-  <app-dashboard [idGroup]="idGroup" class="p-4"></app-dashboard>
+  @if (listLoaded) {
+    <div>
+      <app-dashboard [idGroup]="idGroup" [payments]="spentsPayments" class="p-4"></app-dashboard>
+    </div>
+  }
 
       @for (spent of spents; track spent.id) {   
         <div class="">
