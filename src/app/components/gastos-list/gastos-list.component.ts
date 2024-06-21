@@ -1,4 +1,4 @@
-import { Component, Inject, Input, SimpleChange, SimpleChanges, inject } from '@angular/core';
+import { Component, Inject, Input, SimpleChange, SimpleChanges, TemplateRef, ViewChild, inject } from '@angular/core';
 import { GastosCardComponent } from '../gastos-card/gastos-card.component';
 import { RouterLink } from '@angular/router';
 import { SaldosCardComponent } from '../saldos-card/saldos-card.component';
@@ -16,6 +16,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   styleUrl: './gastos-list.component.css'
 })
 export class GastosListComponent {
+  @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
   pagosService = inject(PagosService)
   spents: Iactivity[] = [] 
   allActivities: Iactivity[] = []
@@ -55,10 +56,12 @@ export class GastosListComponent {
 
   openGastosModal() {
     this.isGastosModalOpen = true;
+    this.modalService.open(this.modalContent);
   }
 
   async closeGastosModal() {
     this.isGastosModalOpen = false;
+    this.modalService.dismissAll()
     await this.getSpents()
   }
 
