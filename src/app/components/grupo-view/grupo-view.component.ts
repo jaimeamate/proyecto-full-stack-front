@@ -54,7 +54,8 @@ export class GrupoViewComponent {
         console.log(this.user)    
         this.group = await this.groupService.getById(id)
         this.members = await this.groupService.getGroupMembers(id)
-        const [userData] = this.members.filter((m:any) => m.idUser === this.user.user_id)
+        const [userData] = this.members.filter((m:any) => m.id === this.user.user_id)
+        console.log(this.members)
         console.log(userData)
         this.isAdmin = userData.isAdmin
         console.log(this.members)
