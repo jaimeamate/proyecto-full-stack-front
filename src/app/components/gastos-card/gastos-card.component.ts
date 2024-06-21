@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 })
 export class GastosCardComponent {
   @Input() miSpent!: Iactivity;
-  @Output() spentCreated = new EventEmitter<number>();
+  @Output() spendDeleted = new EventEmitter<number>();
 
   spentsForm: FormGroup;
 
@@ -52,10 +52,12 @@ export class GastosCardComponent {
     }, []);
   }
 
+
   ngOnInit(): void {
     if (this.miSpent) {
       this.spentsForm.patchValue(this.miSpent);
     }
+    // this.refreshPage()
   }
 
   editMode() {
@@ -79,7 +81,10 @@ export class GastosCardComponent {
         .catch((err) => {
           console.error('Error updating spent:', err);
         });
+    
     }
+    
+
   }
 
   async onDelete() {
@@ -102,7 +107,7 @@ export class GastosCardComponent {
             icon: 'success'
           });
           // Redirigir o actualizar la lista de gastos aquí
-          this.spentCreated.emit();
+          this.spendDeleted.emit();
 
         }).catch((err) => {
           console.error('Error deleting spent:', err);

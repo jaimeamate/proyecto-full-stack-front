@@ -63,6 +63,7 @@ export class CrearGastosComponent {
         await this.pagosService.insert(newSpent).then(Response =>{
           this.spentsForm.reset();
           this.spentCreated.emit();
+          this.cerrarModal()
         }); // Pasamos directamente el objeto
         console.log('Gasto creado con éxito');
         this.spentCreated.emit();

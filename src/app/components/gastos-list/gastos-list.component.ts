@@ -46,25 +46,31 @@ export class GastosListComponent {
       console.log('Filtrando gastos para el grupo con ID:', this.idGroup);
       this.spents = this.allActivities.filter(activity => activity.idGroup === this.idGroup);
       console.log('Gastos filtrados:', this.spents);
-
     }
+
+
   }
 //PARA ABRIR EL FORM CON EL BOTON
  
 
-  
   openGastosModal() {
     this.isGastosModalOpen = true;
   }
 
-  closeGastosModal() {
+  async closeGastosModal() {
     this.isGastosModalOpen = false;
+    await this.getSpents()
   }
 
   handleFormSubmitted() {
     this.isGastosModalOpen = false;
   }
+  async onSpendDeleted() {
+    await this.getSpents()
+  }
+
 }
+
 
 
   // openGastosModal(idGroup: number) {
