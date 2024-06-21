@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, first, firstValueFrom } from 'rxjs';
 import { Usuario } from '../interfaces/iusuario';
 
 @Injectable({
@@ -44,6 +44,13 @@ export class UsuariosService {
         password,
         ind_baja
       });
+    }
+
+    getUserById(id: number){
+      return firstValueFrom(
+        this.httpClient.get<any>(`${this.usersUrl}/${id}`) 
+      ) 
+        
     }
     
 }

@@ -49,15 +49,15 @@
     </div>
     <div class="form-buttons">
       <button class="btn btn-success" [disabled]="registroForm.invalid" type="submit">{{ isUpdateMode ? 'Actualizar' : 'Registrarse' }}</button>
-      @if(isUpdateMode){
+      <!-- @if(isUpdateMode){
       <button class="btn btn-danger" type="button" (click)="confirmDelete()">Darse de baja</button>
-      }
+      } -->
     </div>
   </form>
 </div>
 
 <!-- Modal de confirmación -->
-<ng-template #confirmModal let-modal>
+<!-- <ng-template #confirmModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
@@ -69,4 +69,4 @@
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">No</button>
     <button type="button" class="btn btn-danger" (click)="deleteAccount(modal)">Sí</button>
   </div>
-</ng-template>
+</ng-template> -->

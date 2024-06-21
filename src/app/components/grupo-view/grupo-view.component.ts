@@ -9,6 +9,7 @@ import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of, tap } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 
 
@@ -28,7 +29,10 @@ export class GrupoViewComponent {
   editing: boolean = false;
   inputs: string[] = [];
   email: string = '';
-
+  members: any = [];
+  isAdmin: boolean = false;
+  authService = inject(AuthService)
+  user: any = {}
 
 
   constructor(private modalService: NgbModal, private groupService: GroupService) {
@@ -46,7 +50,15 @@ export class GrupoViewComponent {
     this.activatedRoute.params.subscribe(async (params:any) => {
       const id = params.id
       try {
+        this.user = this.authService.getUserData()
+        console.log(this.user)    
         this.group = await this.groupService.getById(id)
+        this.members = await this.groupService.getGroupMembers(id)
+        const [userData] = this.members.filter((m:any) => m.idUser === this.user.user_id)
+        console.log(userData)
+        this.isAdmin = userData.isAdmin
+        console.log(this.members)
+        console.log(this.isAdmin)
       } catch (error) {
         this.router.navigate(['/home'])
       }

@@ -27,50 +27,51 @@
                 }
             </div>
         </div>
-
-        <div class="row flex-grow-1">
-            <div class="col">
-                <div ngbDropdown class="d-inline-block float-end">
-                    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-                        Options
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button (click)="editMode()" ngbDropdownItem>
-                            @if (editing) {
-                                <span class="text-danger">Cancel</span>
-                            } @else {
-                                Edit
-                            }
+        @if (isAdmin) {
+            <div class="row flex-grow-1">
+                <div class="col">
+                    <div ngbDropdown class="d-inline-block float-end">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                            Options
                         </button>
-                        <button ngbDropdownItem class="text-danger" (click)="onDelete()">
-                            Delete
-                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button (click)="editMode()" ngbDropdownItem>
+                                @if (editing) {
+                                    <span class="text-danger">Cancel</span>
+                                } @else {
+                                    Edit
+                                }
+                            </button>
+                            <button ngbDropdownItem class="text-danger" (click)="onDelete()">
+                                Delete
+                            </button>
+                        </div>
+                        <div class="pt-2">
+                            <button type="button" class="btn btn-primary" (click)="openModal()">Enviar Invitacion</button>
+                        </div>
                     </div>
-                    <div class="pt-2">
-                        <button type="button" class="btn btn-primary" (click)="openModal()">Enviar Invitacion</button>
-                    </div>
+                    
+                    <ng-template #modalContent let-modal>
+                        <div class="modal-header">
+                          <h4 class="modal-title">Envio de invitaciones a grupo</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form #form="ngForm" (ngSubmit)="sendInputs(form)">
+                            <div>
+                              <input type="email" class="form-control mb-2" [(ngModel)]="email" name="email" required placeholder="Correo Electrónico">
+                            </div>
+                            <input type="hidden" [(ngModel)]="group.id" name="groupId">
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-success">Enviar</button>
+                              <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
+                            </div>
+                          </form>
+                        </div>
+                      </ng-template>
+                                
                 </div>
-                
-                <ng-template #modalContent let-modal>
-                    <div class="modal-header">
-                      <h4 class="modal-title">Envio de invitaciones a grupo</h4>
-                    </div>
-                    <div class="modal-body">
-                      <form #form="ngForm" (ngSubmit)="sendInputs(form)">
-                        <div>
-                          <input type="email" class="form-control mb-2" [(ngModel)]="email" name="email" required placeholder="Correo Electrónico">
-                        </div>
-                        <input type="hidden" [(ngModel)]="group.id" name="groupId">
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-success">Enviar</button>
-                          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
-                        </div>
-                      </form>
-                    </div>
-                  </ng-template>
-                            
             </div>
-        </div>
+        }
         
     </section>
     <hr>

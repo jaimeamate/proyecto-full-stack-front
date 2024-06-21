@@ -18,7 +18,7 @@
         }
         @if(authService.isLoggedIn()){
         <li class="nav-item">
-          <a class="nav-link" (click)="goToProfile()">Welcome, {{ authService.getUserName() }}</a>
+          <a class="nav-link" (click)="goToProfile()">Welcome, {{ user.firstName }}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="onLogout()"><i class="fas fa-sign-out-alt"></i></a>
