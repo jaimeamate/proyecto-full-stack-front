@@ -23,10 +23,13 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private usuariosService: UsuariosService, private router: Router, private authService: AuthService) { }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    localStorage.clear()
+  }
   onSubmit() {
     this.usuariosService.login(this.credentials).subscribe({
       next: (response) => {
+
         // Manejo de la respuesta del login
         console.log('Login exitoso:', response);
         
