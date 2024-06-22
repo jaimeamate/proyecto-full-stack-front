@@ -5,4 +5,5 @@ export interface Iactivity {
     "amount": number,
     "type"?: boolean,
     "date": string,
+    "idPayer"?: number,
 }

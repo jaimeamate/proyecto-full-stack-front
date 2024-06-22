@@ -51,6 +51,6 @@ export class GroupService {
 
   sendInputs(payload: { email: string, groupId: number }): Observable<any> {
     console.log(payload);
-    return this.httpClient.post(this.urlMail, payload);
+    return this.httpClient.post(`${this.urlBase}/${payload.groupId}/add_user`, payload);
   }
 }

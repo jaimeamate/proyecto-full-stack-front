@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output, inject, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
 import { Iactivity } from '../../interfaces/iactivity';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @Component({
@@ -20,6 +20,7 @@ export class CrearGastosComponent {
 
   @Output() spentCreated = new EventEmitter<void>();
   @Input() idGroup!: number | undefined;
+  @Output() payerIdEmitter = new EventEmitter<number>();
 
   spentsForm: FormGroup;
   pagosService = inject(PagosService)
@@ -27,6 +28,7 @@ export class CrearGastosComponent {
   router = inject(Router)
   activateRoute = inject(ActivatedRoute)
   newSpent: Iactivity[] = []
+  members: any[] = [] 
 
   
   // public activeModal: NgbActiveModal
@@ -37,7 +39,8 @@ export class CrearGastosComponent {
       
       name: new FormControl('',[
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.maxLength(50)
       ]),
       amount: new FormControl('',[
         Validators.required,
@@ -53,7 +56,9 @@ export class CrearGastosComponent {
     }, [])
   }
 
-  ngonInit(): void {
+  ngOnInit(): void {
+    this.getMembers();
+    
     this.getDataForm();
   }
 
@@ -76,9 +81,13 @@ export class CrearGastosComponent {
     }
   }
 
-  
-             
-      
+async getMembers(){
+  if (this.idGroup !== undefined) {
+    this.members = await this.groupService.getGroupMembers(this.idGroup);
+  }
+}
+
+                     
   cerrarModal() {
     this.close.emit(); // Esto notificará al componente padre
   }

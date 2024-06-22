@@ -65,9 +65,11 @@ calculateTotal(){
     this.initialLength = this.payments.length
   }
 }
-editMode(){
-  this.editing = !this.editing
-}
+
+
+
+
+
 }
 
 
