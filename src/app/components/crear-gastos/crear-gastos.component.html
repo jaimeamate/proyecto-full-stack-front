@@ -1,6 +1,7 @@
  
 <section class="container p-4">
     <h3>NUEVO GASTO</h3>
+    
     <form [formGroup]="spentsForm" (ngSubmit)="getDataForm()" class="mt-4">
         <div class="mb-3">
             <label class="form-label" for="name">Nombre gasto</label>
@@ -12,6 +13,12 @@
                 @if(checkControl('name', 'minlength') ){
                 <p class="error">El campo tiene que tener minimo 3 caracteres</p>
                 }
+
+                @if(checkControl('name', 'maxlength') ){
+                    <p class="error">El campo tiene que tener máximo 50 caracteres</p>
+                    }
+
+
         </div>
         <div class="mb-3">
             <label class="form-label" for="amount">Cantidad</label>
@@ -31,8 +38,21 @@
             @if(checkControl('date', 'required')){
                 <p class="error">Campo requerido</p>
                 }
-          
-                      
+                          
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="date">Seleciona usuario</label>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Selecciona el usuario</option>
+                <option value="" >
+                    @for(member of members; track member.user_id){
+                        {{member.firstName}} {{member.lastName}}
+                    }
+                </option>
+              
+              </select>
+                          
         </div>
        
         

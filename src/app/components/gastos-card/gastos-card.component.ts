@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 })
 export class GastosCardComponent {
   @Input() miSpent!: Iactivity;
-  @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
+    @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
 
   @Output() spendDeleted = new EventEmitter<number>();
 

@@ -22,6 +22,7 @@ export class GastosListComponent {
   spentsPayments!: number[]
   allActivities: Iactivity[] = []
   listLoaded: boolean = false
+  idPayer!: number
 
   @Input() idGroup!: number
   isGastosModalOpen = false;
@@ -87,6 +88,8 @@ export class GastosListComponent {
   async onSpendUpdate() {
     await this.getSpents()
   }
+
+ 
 }
 
 
