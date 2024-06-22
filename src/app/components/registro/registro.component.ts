@@ -99,6 +99,7 @@ export class RegistroComponent {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
+            this.router.navigate(['/home']);
           },
           error: (error) => {
             console.error('Error en el registro', error);
