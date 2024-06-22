@@ -33,6 +33,7 @@ export class GrupoViewComponent {
   isAdmin: boolean = false;
   authService = inject(AuthService)
   user: any = {}
+  groupLoaded: boolean = false
 
 
   constructor(private modalService: NgbModal, private groupService: GroupService) {
@@ -51,6 +52,7 @@ export class GrupoViewComponent {
       const id = params.id
       try {
         this.user = this.authService.getUserData()
+        console.log(this.user)
         console.log(this.user)    
         this.group = await this.groupService.getById(id)
         this.members = await this.groupService.getGroupMembers(id)
@@ -60,6 +62,8 @@ export class GrupoViewComponent {
         this.isAdmin = userData.isAdmin
         console.log(this.members)
         console.log(this.isAdmin)
+        this.user = userData
+        this.groupLoaded = true
       } catch (error) {
         this.router.navigate(['/home'])
       }
