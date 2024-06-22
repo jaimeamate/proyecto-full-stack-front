@@ -99,8 +99,9 @@ export class RegistroComponent {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
+            this.usuariosService.authEventEmiter.emit()
             this.router.navigate(['/home']);
-          },
+            },
           error: (error) => {
             console.error('Error en el registro', error);
             Swal.fire({
