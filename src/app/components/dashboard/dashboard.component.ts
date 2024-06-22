@@ -58,6 +58,11 @@ calculateTotal(){
     this.initialLength = this.payments.length
   }
 }
+
+
+
+
+
 }
 
 

@@ -84,6 +84,9 @@ export class GastosListComponent {
     await this.getSpents()
   }
 
+  async onSpendUpdate() {
+    await this.getSpents()
+  }
 }
 
 

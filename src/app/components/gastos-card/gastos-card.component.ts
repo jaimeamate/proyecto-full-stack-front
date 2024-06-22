@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 })
 export class GastosCardComponent {
   @Input() miSpent!: Iactivity;
+  @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
+
   @Output() spendDeleted = new EventEmitter<number>();
 
   spentsForm: FormGroup;
@@ -77,6 +79,8 @@ export class GastosCardComponent {
         .then(() => {
           this.miSpent = updatedSpent;
           this.editMode();
+          this.spentUpdated.emit(updatedSpent); // Emitir el evento
+
         })
         .catch((err) => {
           console.error('Error updating spent:', err);

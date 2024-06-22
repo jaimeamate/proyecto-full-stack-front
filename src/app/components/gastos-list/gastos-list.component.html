@@ -1,22 +1,14 @@
 <section class="container">
-  <!-- <table class="table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Fecha</th>
-        <th>Gasto</th>
-      </tr>
-    </thead>
-  </table> -->
+
   @if (listLoaded) {
     <div>
-      <app-dashboard [idGroup]="idGroup" [payments]="spentsPayments" class="p-4"></app-dashboard>
+      <app-dashboard [idGroup]="idGroup" [payments]="spentsPayments"  class="p-4"></app-dashboard>
     </div>
   }
 
       @for (spent of spents; track spent.id) {   
         <div class="">
-          <app-gastos-card (spendDeleted)="onSpendDeleted()" [miSpent]="spent" class="p-4"></app-gastos-card>
+          <app-gastos-card (spendDeleted)="onSpendDeleted()" (spentUpdated)="onSpendUpdate()" [miSpent]="spent" class="p-4"></app-gastos-card>
         </div>
       } @empty {
         <h2 class="text-danger">NO HAY RESULTADOS</h2>
