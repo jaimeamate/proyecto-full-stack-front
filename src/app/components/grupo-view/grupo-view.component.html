@@ -20,7 +20,7 @@
                         <textarea class="form-control" type="text" [ngModel]="group.description" name="description" id="description" [placeholder]="group.description || 'Type a description'" ngModel></textarea>
 
                         <div class="float-end mt-2">
-                            <button class="btn btn-success me-1" type="submit">Apply</button>
+                            <button class="btn btn-success me-1" type="submit" [disabled]="form.invalid">Apply</button>
                             <button class="btn btn-secondary" type="reset" (click)="editMode()">Cancel</button>
                         </div>
                     </form>
@@ -78,7 +78,7 @@
     <section>
         <!-- <p>AQUI VAN LOS LOGS DE GASTOS</p> -->
         @if(group.id ?? 0){
-            <app-gastos-list [idGroup]="group.id"></app-gastos-list>
+            <app-gastos-list [idGroup]="group.id ?? 0"></app-gastos-list>
         }
     </section>
 </main>
