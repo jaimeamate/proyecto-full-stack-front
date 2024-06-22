@@ -23,7 +23,7 @@ export class GastosListComponent {
   allActivities: Iactivity[] = []
   listLoaded: boolean = false
 
-  @Input() idGroup!: number | undefined
+  @Input() idGroup!: number
   isGastosModalOpen = false;
 
   constructor(private modalService: NgbModal) { }

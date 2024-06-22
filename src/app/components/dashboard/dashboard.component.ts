@@ -1,20 +1,25 @@
 import { Component, Input, inject } from '@angular/core';
 import { Iactivity } from '../../interfaces/iactivity';
 import { PagosService } from '../../services/pagos.service';
+import { GroupService } from '../../services/group.service';
+import { Usuario } from '../../interfaces/iusuario';
+import { FormsModule } from '@angular/forms';
+import { CurrencyPipe, DecimalPipe, JsonPipe, PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, DecimalPipe, PercentPipe, CurrencyPipe, JsonPipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
   @Input() miSpent!: Iactivity;
   @Input() payments: number[] = [];
-  @Input() idGroup!: number | undefined; // Recibe el id del grupo como input
+  @Input() idGroup!: number; // Recibe el id del grupo como input
   initialLength = 0
-
+  groupService = inject(GroupService)
+  members:any[] = []
 
 
 pagosService = inject(PagosService);
@@ -26,11 +31,12 @@ constructor() {
   console.log('Constructor - idGroup:', this.idGroup);
 }
 
-ngOnInit() {
+async ngOnInit() {
+  this.members = await this.groupService.getGroupMembers(this.idGroup)
   console.log(this.payments)
   this.calculateTotal()
   console.log('idGroup:', this.idGroup); // Verificar el id del grupo recibido
-
+  console.log(this.members)
   console.log(this.totalAmount)
 //   if (this.idGroup !== undefined && this.idGroup !== null) {
 //     this.pagosService.getByGroup(this.idGroup).then(activities => {
