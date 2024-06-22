@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators, FormsModule, NgForm, ReactiveFormsM
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CrearGastosComponent } from '../crear-gastos/crear-gastos.component';
 import Swal from 'sweetalert2';
+import { UsuariosService } from '../../services/user.service';
 
 
 @Component({
@@ -18,6 +19,7 @@ import Swal from 'sweetalert2';
 export class GastosCardComponent {
   @Input() miSpent!: Iactivity;
     @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
+    @Input() members: any[] = []; // Agrega esto para recibir la lista de miembros
 
   @Output() spendDeleted = new EventEmitter<number>();
 
@@ -35,6 +37,10 @@ export class GastosCardComponent {
 
   router = inject(Router);
   pagosService = inject(PagosService);
+  userService = inject(UsuariosService);
+  payer: any = {
+
+  }
 
   editing: boolean = false;
 
@@ -55,7 +61,11 @@ export class GastosCardComponent {
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
+   await this.getPayerNameById(this.miSpent.idPayer)
+   console.log(this.payer)
+
     if (this.miSpent) {
       this.spentsForm.patchValue(this.miSpent);
     }
@@ -90,6 +100,11 @@ export class GastosCardComponent {
     
 
   }
+
+  
+
+  async getPayerNameById(Id?: any): Promise<void> {
+    this.payer = await this.userService.getUserById(Id)  }
 
   async onDelete() {
     const { value: deleteSpent } = await Swal.fire({

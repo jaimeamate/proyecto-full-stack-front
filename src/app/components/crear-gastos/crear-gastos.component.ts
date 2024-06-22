@@ -4,6 +4,7 @@ import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
 import { Iactivity } from '../../interfaces/iactivity';
+import { Ipayer } from '../../interfaces/ipayer';
 
 
 
@@ -29,6 +30,8 @@ export class CrearGastosComponent {
   activateRoute = inject(ActivatedRoute)
   newSpent: Iactivity[] = []
   members: any[] = [] 
+  payerId: Ipayer | undefined;
+
 
   
   // public activeModal: NgbActiveModal
@@ -50,6 +53,10 @@ export class CrearGastosComponent {
       date: new FormControl('',[
         Validators.required,
       ]),
+
+      idPayer: new FormControl('', [
+        Validators.required
+      ]), // A
       
       
 
@@ -57,13 +64,14 @@ export class CrearGastosComponent {
   }
 
   ngOnInit(): void {
-    this.getMembers();
+   this.getMembers();
     
     this.getDataForm();
   }
 
   async getDataForm() {
     if (this.spentsForm.valid) {
+      console.log(this.spentsForm.value);
       const newSpent: Iactivity = { ...this.spentsForm.value, idGroup: this.idGroup };
       console.log(this.idGroup) // Cambiado para crear un objeto en lugar de un arreglo
       try {
@@ -73,6 +81,7 @@ export class CrearGastosComponent {
           this.cerrarModal()
         }); // Pasamos directamente el objeto
         console.log('Gasto creado con éxito');
+        console.log('Nuevo gasto:', newSpent);
         this.spentCreated.emit();
         this.spentsForm.reset();
       } catch (error) {
@@ -81,12 +90,12 @@ export class CrearGastosComponent {
     }
   }
 
-async getMembers(){
-  if (this.idGroup !== undefined) {
-    this.members = await this.groupService.getGroupMembers(this.idGroup);
+  async getMembers() {
+    if (this.idGroup !== undefined) {
+      this.members = await this.groupService.getGroupMembers(this.idGroup);
+      console.log('Miembros del grupo:', this.members); // Verifica los datos obtenidos
+    }
   }
-}
-
                      
   cerrarModal() {
     this.close.emit(); // Esto notificará al componente padre
