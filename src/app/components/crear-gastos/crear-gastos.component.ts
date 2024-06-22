@@ -50,6 +50,10 @@ export class CrearGastosComponent {
       date: new FormControl('',[
         Validators.required,
       ]),
+
+      // payer: new FormControl('', [
+      //   Validators.required
+      // ]), // A
       
       
 
@@ -57,7 +61,7 @@ export class CrearGastosComponent {
   }
 
   ngOnInit(): void {
-    this.getMembers();
+   this.getMembers();
     
     this.getDataForm();
   }
@@ -73,6 +77,7 @@ export class CrearGastosComponent {
           this.cerrarModal()
         }); // Pasamos directamente el objeto
         console.log('Gasto creado con éxito');
+        console.log('Nuevo gasto:', newSpent);
         this.spentCreated.emit();
         this.spentsForm.reset();
       } catch (error) {
@@ -81,12 +86,12 @@ export class CrearGastosComponent {
     }
   }
 
-async getMembers(){
-  if (this.idGroup !== undefined) {
-    this.members = await this.groupService.getGroupMembers(this.idGroup);
+  async getMembers() {
+    if (this.idGroup !== undefined) {
+      this.members = await this.groupService.getGroupMembers(this.idGroup);
+      console.log('Miembros del grupo:', this.members); // Verifica los datos obtenidos
+    }
   }
-}
-
                      
   cerrarModal() {
     this.close.emit(); // Esto notificará al componente padre

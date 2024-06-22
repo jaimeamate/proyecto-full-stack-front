@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 export class GastosCardComponent {
   @Input() miSpent!: Iactivity;
     @Output() spentUpdated = new EventEmitter<Iactivity>(); // Evento de salida
+    @Input() members: any[] = []; // Agrega esto para recibir la lista de miembros
 
   @Output() spendDeleted = new EventEmitter<number>();
 
@@ -89,6 +90,14 @@ export class GastosCardComponent {
     }
     
 
+  }
+
+  getMemberNameById(userId?: number): string {
+    if (userId === undefined) {
+      return 'Unknown';
+    }
+    const member = this.members.find(m => m.user_id);
+    return member ? member.first_name : 'Unknown';
   }
 
   async onDelete() {

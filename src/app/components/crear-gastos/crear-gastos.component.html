@@ -42,15 +42,18 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label" for="date">Seleciona usuario</label>
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Selecciona el usuario</option>
-                <option value="" >
+            <label class="form-label" for="payer">Seleciona usuario</label>
+            <select class="form-select" aria-label="Default select example" type="button" id="payer">
+                
                     @for(member of members; track member.user_id){
+                        <option [value]="member.user_id">
                         {{member.firstName}} {{member.lastName}}
+                    </option>
                     }
-                </option>
-              
+                
+                <!-- @if(checkControl('payer', 'required')){
+                    <p class="error">Campo requerido</p>
+                    } -->
               </select>
                           
         </div>
