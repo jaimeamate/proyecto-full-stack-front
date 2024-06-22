@@ -20,6 +20,7 @@ export class DashboardComponent {
   initialLength = 0
   groupService = inject(GroupService)
   members:any[] = []
+  editing = false
 
 
 pagosService = inject(PagosService);
@@ -63,6 +64,9 @@ calculateTotal(){
     )
     this.initialLength = this.payments.length
   }
+}
+editMode(){
+  this.editing = !this.editing
 }
 }
 
