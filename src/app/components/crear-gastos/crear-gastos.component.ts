@@ -4,6 +4,7 @@ import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
 import { Iactivity } from '../../interfaces/iactivity';
+import { Ipayer } from '../../interfaces/ipayer';
 
 
 
@@ -29,6 +30,8 @@ export class CrearGastosComponent {
   activateRoute = inject(ActivatedRoute)
   newSpent: Iactivity[] = []
   members: any[] = [] 
+  payerId: Ipayer | undefined;
+
 
   
   // public activeModal: NgbActiveModal
@@ -51,9 +54,9 @@ export class CrearGastosComponent {
         Validators.required,
       ]),
 
-      // payer: new FormControl('', [
-      //   Validators.required
-      // ]), // A
+      idPayer: new FormControl('', [
+        Validators.required
+      ]), // A
       
       
 
@@ -68,6 +71,7 @@ export class CrearGastosComponent {
 
   async getDataForm() {
     if (this.spentsForm.valid) {
+      console.log(this.spentsForm.value);
       const newSpent: Iactivity = { ...this.spentsForm.value, idGroup: this.idGroup };
       console.log(this.idGroup) // Cambiado para crear un objeto en lugar de un arreglo
       try {
