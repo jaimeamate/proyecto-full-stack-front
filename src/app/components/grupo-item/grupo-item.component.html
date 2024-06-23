@@ -2,7 +2,8 @@
     <h5 class="card-header">{{group?.name}}</h5>
     <div class="card-body">
       <!-- <h5 class="card-title">Special title treatment</h5> -->
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <p class="card-text">{{ group?.description ? group?.description : 'El grupo fue creado sin descripción' }}</p>
+
       <a routerLinkActive="active" [routerLink]="['/group',group?.id]" class="btn btn-outline-primary float-end w-100">View</a>
     </div>
   </div>
