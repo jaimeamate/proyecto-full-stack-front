@@ -57,6 +57,10 @@ export class GastosCardComponent {
        date: new FormControl('', [
          Validators.required,
        ]),
+
+       idPayer: new FormControl('', [
+         Validators.required
+       ]),
     }, []);
   }
 
