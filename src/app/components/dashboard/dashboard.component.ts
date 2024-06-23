@@ -5,6 +5,7 @@ import { GroupService } from '../../services/group.service';
 import { Usuario } from '../../interfaces/iusuario';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe, DecimalPipe, JsonPipe, PercentPipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,18 +15,23 @@ import { CurrencyPipe, DecimalPipe, JsonPipe, PercentPipe } from '@angular/commo
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  @Input() user: any;
   @Input() miSpent!: Iactivity;
   @Input() payments: number[] = [];
   @Input() idGroup!: number; // Recibe el id del grupo como input
   initialLength = 0
   groupService = inject(GroupService)
   members:any[] = []
+  editing = false
 
 
 pagosService = inject(PagosService);
 totalAmount: number = 0;
 
 constructor() {
+  console.log(this.user?.isAdmin)
+  // this.user = authService.getUserData()
+  // console.log(this.user)
   console.log(this.payments.length)
   this.initialLength = this.payments.length
   console.log('Constructor - idGroup:', this.idGroup);

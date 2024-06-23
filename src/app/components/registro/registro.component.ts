@@ -92,10 +92,25 @@ export class RegistroComponent {
         const safeuserId = this.usuario.user_id ?? '';
         this.usuariosService.update(safeFirstName, safeLastName, phoneNumber, safeEmail, safePassword, ind_baja, safeuserId).subscribe({
           next: (response) => {
-            console.log('Registro exitoso', response);
-          },
+            console.log('Actualizado con exitoso', response);
+            localStorage.setItem('firstName',response.firstName);
+            Swal.fire({
+              title: 'Éxito',
+              text: 'Actualizado con éxito',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            this.usuariosService.authEventEmiter.emit()
+            this.router.navigate(['/home']);
+            },
           error: (error) => {
             console.error('Error en el registro', error);
+            Swal.fire({
+              title: 'Error',
+              text:  `Ha ocurrido un error al actualizar `,
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
           }
         });
       }

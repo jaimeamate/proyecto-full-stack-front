@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
         // Guarda el nombre del usuario en el almacenamiento local
         localStorage.setItem('email', decodedToken.email);
         localStorage.setItem('role', decodedToken.role);
+        localStorage.setItem('firstName', decodedToken.firstName);
 
         if (decodedToken.ind_baja) {
           alert('Su cuenta está inactiva. Contacte al administrador.');
