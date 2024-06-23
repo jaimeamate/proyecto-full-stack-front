@@ -7,7 +7,8 @@ import { Usuario } from '../interfaces/iusuario';
   providedIn: 'root'
 })
 export class UsuariosService {
-  @Output() authEventEmiter: EventEmitter<void> = new EventEmitter()
+  @Output() authEventEmiter: EventEmitter<void | string> = new EventEmitter()
+  @Output() userEmitter: EventEmitter<void | string> = new EventEmitter()
 
   private authUrl: string = 'http://localhost:3030/api/auth/login';
   private registerUrl: string = 'http://localhost:3030/api/auth/register';

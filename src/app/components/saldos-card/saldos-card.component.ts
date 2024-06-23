@@ -11,4 +11,7 @@ import { Iactivity } from '../../interfaces/iactivity';
 })
 export class SaldosCardComponent {
 @Input() myactivity! :Iactivity;
+@Input() member: any;
+
+constructor(){}
 }

@@ -29,7 +29,10 @@
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
       
-      <app-saldos-card></app-saldos-card>
+      @for(m of members; track m.id){
+        <app-saldos-card [member]="m"></app-saldos-card>
+      }
+      
     </div>
 
   </div>
