@@ -36,6 +36,7 @@ export class GrupoViewComponent {
   user: any = {}
   groupLoaded: boolean = false
 
+  
 
   constructor(private modalService: NgbModal, private groupService: GroupService, private userService: UsuariosService) {
     this.group = { 
