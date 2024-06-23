@@ -1,6 +1,6 @@
 import { Component, Inject, Input, SimpleChange, SimpleChanges, TemplateRef, ViewChild, inject } from '@angular/core';
 import { GastosCardComponent } from '../gastos-card/gastos-card.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SaldosCardComponent } from '../saldos-card/saldos-card.component';
 import { Iactivity } from '../../interfaces/iactivity';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +10,8 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { GroupService } from '../../services/group.service';
 import { JsonPipe } from '@angular/common';
 import { UsuariosService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { IGroup } from '../../interfaces/igroup';
 
 @Component({
   selector: 'app-gastos-list',
@@ -28,9 +30,20 @@ export class GastosListComponent {
   listLoaded: boolean = false
   idPayer!: number
   members: any[] = []
+  activatedRoute = inject(ActivatedRoute)
+  groupLoaded: boolean = false
+  router = inject(Router)
+
+
 
   @Input() idGroup!: number
   isGastosModalOpen = false;
+  authService = inject(AuthService)
+  group!: IGroup
+  isAdmin: boolean = false;
+
+
+
 
   constructor(private modalService: NgbModal, private groupService: GroupService, private userService: UsuariosService) { 
     console.log(this.user)
@@ -41,6 +54,28 @@ export class GastosListComponent {
     this.userService.userEmitter.subscribe(async()=>{
       await this.getSpents()
     })
+
+
+    this.activatedRoute.params.subscribe(async (params:any) => {
+      const id = params.id
+      try {
+        this.user = this.authService.getUserData()
+          
+        this.group = await this.groupService.getById(id)
+        this.members = await this.groupService.getGroupMembers(id)
+        const [userData] = this.members.filter((m:any) => m.id === this.user.user_id)
+       
+        this.isAdmin = userData.isAdmin
+       
+        this.user = userData
+        this.groupLoaded = true
+      } catch (error) {
+        this.router.navigate(['/home'])
+      }
+    })
+
+
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
