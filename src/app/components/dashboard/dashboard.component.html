@@ -1,6 +1,6 @@
 <section class="d-flex justify-content-center text-center">
 
-<div class="card col-6">
+<div class="card">
   <div class="card-header">
     Control Dashboard
   </div>
@@ -15,10 +15,10 @@
     <div class="d-flex justify-content-between align-items-center">
       @for(m of members; track m.user_id){
         <div class="border border-primary rounded mx-2">
-          <p class="text-capitalize"><b>{{m.firstName}} {{m.lastName}}</b></p>
+          <p class="text-capitalize">{{m.firstName}} {{m.lastName}}</p>
           <hr class="my-1">
           <div class="d-flex justify-content-between align-items-center">
-            <input #percent="ngModel" class="form-control formato border-secondary-subtle m-2" type="number" min="0" max="100" [placeholder]="1/members.length | percent" ngModel>
+            <input #percent="ngModel" class="form-control formato border-secondary-subtle m-2" type="number" min="0" max="100" [placeholder]="1/members.length | percent" [disabled]="!user.isAdmin" ngModel>
             <span class="formato align-content-center border border-secondary-subtle rounded m-2">{{totalAmount*(percent.value/100) | currency: 'EUR'}}</span>
           </div>
         </div>

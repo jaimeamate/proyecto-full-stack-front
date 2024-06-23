@@ -17,6 +17,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 })
 export class GastosListComponent {
   @ViewChild('modalContent') modalContent: TemplateRef<any> | undefined;
+  @Input() user: any
   pagosService = inject(PagosService)
   spents: Iactivity[] = []
   spentsPayments!: number[]
@@ -27,7 +28,9 @@ export class GastosListComponent {
   @Input() idGroup!: number
   isGastosModalOpen = false;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) { 
+    console.log(this.user)
+  }
 
   async ngOnInit(): Promise<void> {
     await this.getSpents()
