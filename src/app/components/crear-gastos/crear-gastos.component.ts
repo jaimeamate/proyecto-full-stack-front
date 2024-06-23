@@ -1,17 +1,20 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { PagosService } from '../../services/pagos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
 import { Iactivity } from '../../interfaces/iactivity';
 import { Ipayer } from '../../interfaces/ipayer';
+import { CurrencyPipe } from '@angular/common';
+
+// Custom validator to check max digits
 
 
 
 @Component({
   selector: 'app-crear-gastos',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CurrencyPipe],
   templateUrl: './crear-gastos.component.html',
   styleUrl: './crear-gastos.component.css'
 })
@@ -32,7 +35,8 @@ export class CrearGastosComponent {
   members: any[] = [] 
   payerId: Ipayer | undefined;
 
-
+ minDate: string;
+ maxDate: string;
   
   // public activeModal: NgbActiveModal
     
@@ -47,7 +51,9 @@ export class CrearGastosComponent {
       ]),
       amount: new FormControl('',[
         Validators.required,
-        Validators.minLength(1)
+        Validators.minLength(1),
+        this.maxDigitsValidator(10) // Custom validator para chequear la cantidad de dígitos
+
 
       ]),
       date: new FormControl('',[
@@ -61,8 +67,36 @@ export class CrearGastosComponent {
       
 
     }, [])
+
+
+    const currentYear = new Date().getFullYear();
+    this.minDate = `${currentYear - 1}-01-01`;
+    this.maxDate = `${currentYear + 1}-12-31`;
+
+
   }
 
+//Funcion custom validator check max digits
+  maxDigitsValidator(maxDigits: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (value && value.toString().length > maxDigits) {
+        return { maxDigits: true };
+      }
+      return null;
+    };
+  }
+
+//limitar la cantidad de digitos
+  limitDigits(event: any, maxDigits: number) {
+    const value = event.target.value;
+    if (value && value.toString().length > maxDigits) {
+      event.target.value = value.toString().slice(0, maxDigits);
+    }
+  }
+
+
+  
   ngOnInit(): void {
    this.getMembers();
     
