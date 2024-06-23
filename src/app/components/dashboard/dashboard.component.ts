@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, TemplateRef, inject } from '@angular/core';
 import { Iactivity } from '../../interfaces/iactivity';
 import { PagosService } from '../../services/pagos.service';
 import { GroupService } from '../../services/group.service';
@@ -6,11 +6,13 @@ import { Usuario } from '../../interfaces/iusuario';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe, DecimalPipe, JsonPipe, PercentPipe } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { EditMembersGroupComponent } from '../edit-members-group/edit-members-group.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, DecimalPipe, PercentPipe, CurrencyPipe, JsonPipe],
+  imports: [FormsModule, DecimalPipe, PercentPipe, CurrencyPipe, JsonPipe, EditMembersGroupComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -28,7 +30,7 @@ export class DashboardComponent {
 pagosService = inject(PagosService);
 totalAmount: number = 0;
 
-constructor() {
+constructor(private modalService: NgbModal) {
   console.log(this.user?.isAdmin)
   // this.user = authService.getUserData()
   // console.log(this.user)
@@ -70,7 +72,9 @@ calculateTotal(){
     this.initialLength = this.payments.length
   }
 }
-
+open(content: TemplateRef<any>) {
+  this.modalService.open(content, { size: 'lg' })
+}
 
 
 
