@@ -12,10 +12,12 @@
         <p class="text-success fs-1 w-100 m-2">{{totalAmount | currency: 'EUR'}}</p>
       </div>
     </div>
-    <div class="d-flex w-100 justify-content-around p-2 gap-3">
-      <button class="w-50 btn btn-primary" (click)="open(content)">Edit members</button>
-      <button class="w-50 btn btn-danger">Delete all payments</button>
-    </div>
+    @if(user.isAdmin){
+      <div class="d-flex w-100 justify-content-around p-2 gap-3">
+        <button class="w-50 btn btn-primary" (click)="open(content)">Edit members</button>
+        <button class="w-50 btn btn-danger">Delete all payments</button>
+      </div>
+    }
     <ng-template #content let-modal>
       <app-edit-members-group [members]="members" [idGroup]="idGroup"></app-edit-members-group>
     </ng-template>

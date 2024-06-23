@@ -29,7 +29,7 @@ export class EditMembersGroupComponent {
     console.log(this.members)
     this.members.forEach( (m:any) => {
       this.formulario.addControl(`${m.id}`,new FormControl(
-        '',[
+        m.percent,[
           Validators.required,
           Validators.min(0),
           Validators.max(100)
@@ -43,7 +43,10 @@ export class EditMembersGroupComponent {
   onSubmit(formulario: FormGroup){
     this.suma100 = false;
     console.log(formulario.value)
-    const porcentajes = Object.values(formulario.value)
+    let porcentajes = Object.values(formulario.value)
+    porcentajes = porcentajes.map((p:any) => {
+      return parseFloat(p)
+    })
     console.log(porcentajes);
     if(porcentajes.length>0){
       const result = porcentajes.reduce((acc:number,curr:any):number=>{
@@ -54,11 +57,12 @@ export class EditMembersGroupComponent {
     if(this.suma100){
       let body = []
       for (const key in formulario.value){
-        body.push({userId:parseInt(key),percent:formulario.value[key]})
+        body.push({userId:parseInt(key),percent:parseFloat(formulario.value[key])})
       }
       console.log(body);
       // ENVIA PETICION DE PATCH
       this.groupService.updatePorcentajes(this.idGroup,body)
+      this.modalService.dismissAll()
     }
   }
   checkError(field: string, validator: string): boolean | undefined {
