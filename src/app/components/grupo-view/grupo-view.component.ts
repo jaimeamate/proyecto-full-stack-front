@@ -85,6 +85,7 @@ export class GrupoViewComponent {
   applyEdit(form: NgForm){
     form.value.id = this.group.id
     this.group = form.value;
+    console.log(this.group)
     this.editGroup()
   }
 
@@ -130,7 +131,7 @@ export class GrupoViewComponent {
    */
   sendInputs(form: NgForm) {
     if (form.valid) {
-      const payload = { email: this.email, groupId: form.value.groupId };
+      const payload = { email: this.email, groupId: form.value.groupId, percent: 0 };
       this.groupService.sendInputs(payload).pipe(
         tap(response => {
           Swal.fire({

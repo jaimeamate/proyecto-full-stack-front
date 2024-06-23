@@ -24,9 +24,9 @@ export class GroupService {
     )
   }
 
-  updateById({id, name}:IGroup) {
+  updateById({id, name, description}:IGroup) {
     return firstValueFrom(
-      this.httpClient.patch<any>(`${this.urlBase}/${id}`,{name})
+      this.httpClient.patch<any>(`${this.urlBase}/${id}`,{name, description})
     )
   }
   
@@ -46,6 +46,12 @@ export class GroupService {
   getGroupMembers(idGroup:number){
     return firstValueFrom(
       this.httpClient.get<any>(`${this.urlBase}/${idGroup}/users`)
+    )
+  }
+
+  updatePorcentajes(idGroup: number, body: any): Promise<any>{
+    return firstValueFrom(
+      this.httpClient.patch<any>(`${this.urlBase}/${idGroup}/users/change`,body)
     )
   }
 
