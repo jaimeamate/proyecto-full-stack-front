@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, Output, inject, output } from '@angular/core';
 import { Iactivity } from '../../interfaces/iactivity';
 import { PagosService } from '../../services/pagos.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CrearGastosComponent } from '../crear-gastos/crear-gastos.component';
 import Swal from 'sweetalert2';
 import { UsuariosService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { IGroup } from '../../interfaces/igroup';
+import { GroupService } from '../../services/group.service';
 
 
 @Component({
@@ -22,6 +25,9 @@ export class GastosCardComponent {
     @Input() members: any[] = []; // Agrega esto para recibir la lista de miembros
 
   @Output() spendDeleted = new EventEmitter<number>();
+  activatedRoute = inject(ActivatedRoute)
+  authService = inject(AuthService)
+  groupService= inject(GroupService)
 
   spentsForm: FormGroup;
 
@@ -38,11 +44,15 @@ export class GastosCardComponent {
   router = inject(Router);
   pagosService = inject(PagosService);
   userService = inject(UsuariosService);
-  payer: any = {
+  payer: any = {}
 
-  }
+  group!: IGroup
 
+  user: any = {}
+  isAdmin: boolean = false;
   editing: boolean = false;
+  groupLoaded: boolean = false
+
 
   constructor() {
     this.spentsForm = new FormGroup({
@@ -73,8 +83,30 @@ export class GastosCardComponent {
     if (this.miSpent) {
       this.spentsForm.patchValue(this.miSpent);
     }
-    // this.refreshPage()
+
+    this.activatedRoute.params.subscribe(async (params:any) => {
+      const id = params.id
+      try {
+        this.user = this.authService.getUserData()
+        console.log(this.user)
+        console.log(this.user)    
+        this.group = await this.groupService.getById(id)
+        this.members = await this.groupService.getGroupMembers(id)
+        const [userData] = this.members.filter((m:any) => m.id === this.user.user_id)
+        console.log(this.members)
+        console.log(userData)
+        this.isAdmin = userData.isAdmin
+        console.log(this.members)
+        console.log(this.isAdmin)
+        this.user = userData
+        this.groupLoaded = true
+      } catch (error) {
+        this.router.navigate(['/home'])
+      }
+    })
   }
+
+
 
   async editMode() {
     this.editing = !this.editing;

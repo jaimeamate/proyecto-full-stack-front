@@ -34,7 +34,8 @@ export class CrearGastosComponent {
   members: any[] = [] 
   payerId: Ipayer | undefined;
 
-
+ minDate: string;
+ maxDate: string;
   
   // public activeModal: NgbActiveModal
     
@@ -65,6 +66,13 @@ export class CrearGastosComponent {
       
 
     }, [])
+
+
+    const currentYear = new Date().getFullYear();
+    this.minDate = `${currentYear - 1}-01-01`;
+    this.maxDate = `${currentYear + 1}-12-31`;
+
+
   }
 
 //Funcion custom validator check max digits
@@ -77,6 +85,15 @@ export class CrearGastosComponent {
       return null;
     };
   }
+
+//limitar la cantidad de digitos
+  limitDigits(event: any, maxDigits: number) {
+    const value = event.target.value;
+    if (value && value.toString().length > maxDigits) {
+      event.target.value = value.toString().slice(0, maxDigits);
+    }
+  }
+
 
   
   ngOnInit(): void {

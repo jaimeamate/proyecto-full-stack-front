@@ -65,9 +65,9 @@
                         </option>
                         }
                     
-                    <!-- @if(checkControl('payer', 'required')){
+                    @if(checkControl('payer', 'required')){
                         <p class="error">Campo requerido</p>
-                        } -->
+                        }
                   </select>
                               
             </div>
@@ -78,57 +78,31 @@
             </div> 
               
            </form>
-
-
-
-
-
-
-
-
-              <!-- <form #form="ngForm" (ngSubmit)="applyEdit(form)">
-                  <label for="name">Name:</label>
-                  <input class="form-control" type="text" pattern="(?=.*[a-zA-Z])[\w\s]*" [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.dirty" [ngModel]="spent.name" #name="ngModel" name="name" id="name" [placeholder]="spent.name || 'Type a group name'" minlength="2" maxlength="15" ngModel required>
-                  @if (name.invalid && name.dirty) {
-                      <div class="text-danger">
-                          @if (name.errors?.['required']) { <span>Required</span> }
-                          @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
-                          @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
-                      </div>
-                  }
-                  <label for="description" class="mt-2">Description:</label>
-                  <textarea class="form-control" type="text" [ngModel]="spent.amount" name="description" id="description" [placeholder]="spent.amount || 'Type a description'" ngModel></textarea>
-
-                  <div class="float-end mt-2">
-                      <button class="btn btn-success me-1" type="submit">Apply</button>
-                      <button class="btn btn-secondary" type="reset" (click)="editMode()">Cancel</button>
-                  </div>
-              </form> -->
           }
 
-          <div class="col-2 text-end ">
-            <div ngbDropdown class="d-inline-block float-end">
-              <button type="button" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle>
-                  Options
-              </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button (click)="editMode()" ngbDropdownItem>
-                      @if (editing) {
-                          <span class="text-danger">Cancel</span>
-                      } @else {
-                          Edit
-                      }
+          <!-- Boton de opciones limitado solo a los administradores -->
+          @if(isAdmin){
+            <div class="col-2 text-end ">
+                <div ngbDropdown class="d-inline-block float-end">
+                  <button type="button" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle>
+                      Options
                   </button>
-                  <!-- <button ngbDropdownItem>
-                      Members
-                  </button> -->
-                 <button ngbDropdownItem class="text-danger" (click)="onDelete()">
-                      Delete
-                  </button> 
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button (click)="editMode()" ngbDropdownItem>
+                          @if (editing) {
+                              <span class="text-danger">Cancel</span>
+                          } @else {
+                              Edit
+                          }
+                      </button>
+                    
+                     <button ngbDropdownItem class="text-danger" (click)="onDelete()">
+                          Delete
+                      </button> 
+                  </div>
               </div>
-          </div>
-          </div>
-
+              </div>
+          }
 
       </div>
   </div>
