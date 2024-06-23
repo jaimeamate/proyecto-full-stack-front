@@ -10,12 +10,13 @@ import { UsuariosService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { IGroup } from '../../interfaces/igroup';
 import { GroupService } from '../../services/group.service';
+import { CurrencyPipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-gastos-card',
   standalone: true,
-  imports: [FormsModule, NgbDropdownModule, CrearGastosComponent, ReactiveFormsModule],
+  imports: [FormsModule, NgbDropdownModule, CrearGastosComponent, ReactiveFormsModule, CurrencyPipe],
   templateUrl: './gastos-card.component.html',
   styleUrl: './gastos-card.component.css'
 })

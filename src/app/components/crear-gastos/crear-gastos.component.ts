@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '../../services/group.service';
 import { Iactivity } from '../../interfaces/iactivity';
 import { Ipayer } from '../../interfaces/ipayer';
+import { CurrencyPipe } from '@angular/common';
 
 // Custom validator to check max digits
 
@@ -13,7 +14,7 @@ import { Ipayer } from '../../interfaces/ipayer';
 @Component({
   selector: 'app-crear-gastos',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CurrencyPipe],
   templateUrl: './crear-gastos.component.html',
   styleUrl: './crear-gastos.component.css'
 })

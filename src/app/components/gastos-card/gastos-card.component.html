@@ -17,7 +17,7 @@
                 <p>{{payer.firstName}}</p>
             </div>
             <div class="col-5 text-end ">
-              <h4 class="align-middle pt-3 text-primary">{{miSpent.amount}}</h4>
+              <h4 class="align-middle pt-3 text-primary">{{miSpent.amount | currency: 'EUR'}}</h4>
             </div>
 
           } @else {
@@ -58,7 +58,6 @@
              <div class="mb-3">
                 <label class="form-label" for="payer">Seleciona usuario</label>
                 <select class="form-select" aria-label="Default select example" type="" id="payer" formControlName="idPayer">
-                    
                         @for(member of members; track member.id){
                             <option [value]="member.id">
                             {{member.firstName}} {{member.lastName}}
