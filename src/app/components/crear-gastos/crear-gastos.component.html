@@ -27,8 +27,12 @@
                 }
           
                 @if(checkControl('amount', 'minlenght')){
-                <p class="error">El campo tiene que tener minimo 1 caracteres</p>
+                <p class="error">El campo tiene que tener minimo 1 cifra</p>
                 }
+
+                @if(checkControl('amount', 'maxDigitsValidator') ){
+                    <p class="error">El campo tiene que tener máximo 10 cifras</p>
+                    }
           
         </div>
         <div class="mb-3">
