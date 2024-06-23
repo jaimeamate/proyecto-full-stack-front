@@ -20,7 +20,8 @@ export class CrearGruposComponent {
   groupService = inject(GroupService)
   router = inject(Router)
   newGroup: IGroup = {
-    "name": ''
+    "name": '',
+    "description":''
   };
 
   constructor(public activeModal: NgbActiveModal) {}
@@ -28,6 +29,7 @@ export class CrearGruposComponent {
   createGroup(form: NgForm): void {
     const {user_id: userID} = this.authService.getUserData() 
     this.newGroup.name.trim()
+    this.newGroup.description ? this.newGroup.description.trim(): '';
     this.groupService.insertOne(this.newGroup, userID).then(response => {
       form.resetForm()
       this.groupCreated.emit();
