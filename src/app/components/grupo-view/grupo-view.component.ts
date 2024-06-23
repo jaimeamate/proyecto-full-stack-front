@@ -130,7 +130,7 @@ export class GrupoViewComponent {
    */
   sendInputs(form: NgForm) {
     if (form.valid) {
-      const payload = { email: this.email, groupId: form.value.groupId };
+      const payload = { email: this.email, groupId: form.value.groupId, percent: 0 };
       this.groupService.sendInputs(payload).pipe(
         tap(response => {
           Swal.fire({
