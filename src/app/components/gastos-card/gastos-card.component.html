@@ -1,14 +1,6 @@
-<!-- <div class="card shadow">
-    <h3 class="card-header text-center">{{miSpent.name}}</h3>
-    <ul class="list-group m-1">
-        <li class="list-group-item">{{miSpent.date}}</li>
-        <li class="list-group-item bg-primary text-white">haha lol: {{miSpent.amount}}</li>
-    </ul>
-</div> -->
 
-   
 
-    <div class="">
+    <div class="container">
       <div class="row justify-content-center shadow p-2 rounded" >
           @if (!editing) {
             <div class="col-5">
@@ -17,7 +9,7 @@
                 <p>{{payer.firstName}}</p>
             </div>
             <div class="col-5 text-end ">
-              <h4 class="align-middle pt-3 text-primary">{{miSpent.amount | currency: 'EUR'}}</h4>
+              <h4 class="align-middle pt-lg-2 text-primary">{{miSpent.amount | currency: 'EUR'}}</h4>
             </div>
 
           } @else {
@@ -81,10 +73,9 @@
 
           <!-- Boton de opciones limitado solo a los administradores -->
           @if(isAdmin){
-            <div class="col-2 text-end ">
+            <div class="col-2">
                 <div ngbDropdown class="d-inline-block float-end">
-                  <button type="button" class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle>
-                      Options
+                  <button type="button" class="btn btn-outline-secondary bi bi-gear" id="dropdownBasic1" ngbDropdownToggle>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                       <button (click)="editMode()" ngbDropdownItem>
