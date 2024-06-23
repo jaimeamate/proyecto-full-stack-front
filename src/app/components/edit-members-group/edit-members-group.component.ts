@@ -3,6 +3,7 @@ import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupService } from '../../services/group.service';
+import { UsuariosService } from '../../services/user.service';
 
 @Component({
   selector: 'app-edit-members-group',
@@ -15,6 +16,7 @@ export class EditMembersGroupComponent {
   @Input() members: any;
   @Input() idGroup: number = 0
   groupService = inject(GroupService)
+  userService = inject(UsuariosService)
   modalService = inject(NgbModal);
   formulario: FormGroup;
 
@@ -62,6 +64,7 @@ export class EditMembersGroupComponent {
       console.log(body);
       // ENVIA PETICION DE PATCH
       this.groupService.updatePorcentajes(this.idGroup,body)
+      this.userService.userEmitter.emit()
       this.modalService.dismissAll()
     }
   }
