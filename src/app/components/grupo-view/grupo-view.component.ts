@@ -85,6 +85,7 @@ export class GrupoViewComponent {
   applyEdit(form: NgForm){
     form.value.id = this.group.id
     this.group = form.value;
+    console.log(this.group)
     this.editGroup()
   }
 
