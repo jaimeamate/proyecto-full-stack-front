@@ -134,7 +134,7 @@ export class GrupoViewComponent {
         tap(response => {
           Swal.fire({
             title: '¡Éxito!',
-            text: 'Los inputs se han enviado correctamente.',
+            text: `Se ha invitado a ${this.email} correctamente.`,
             icon: 'success',
             confirmButtonText: 'OK'
           });
@@ -143,7 +143,7 @@ export class GrupoViewComponent {
         catchError(error => {
           Swal.fire({
             title: 'Error',
-            text: 'Hubo un problema al enviar los inputs.',
+            text: 'Usuario existente en el grupo, no registrado o incorrecto',
             icon: 'error',
             confirmButtonText: 'OK'
           });
