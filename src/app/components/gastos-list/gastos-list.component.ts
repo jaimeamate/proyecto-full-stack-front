@@ -7,6 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CrearGastosComponent } from '../crear-gastos/crear-gastos.component';
 import { PagosService } from '../../services/pagos.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { GroupService } from '../../services/group.service';
+import { JsonPipe } from '@angular/common';
+import { UsuariosService } from '../../services/user.service';
 
 @Component({
   selector: 'app-gastos-list',
@@ -24,16 +27,20 @@ export class GastosListComponent {
   allActivities: Iactivity[] = []
   listLoaded: boolean = false
   idPayer!: number
+  members: any[] = []
 
   @Input() idGroup!: number
   isGastosModalOpen = false;
 
-  constructor(private modalService: NgbModal) { 
+  constructor(private modalService: NgbModal, private groupService: GroupService, private userService: UsuariosService) { 
     console.log(this.user)
   }
 
   async ngOnInit(): Promise<void> {
     await this.getSpents()
+    this.userService.userEmitter.subscribe(async()=>{
+      await this.getSpents()
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,7 +53,9 @@ export class GastosListComponent {
     this.listLoaded = false
     console.log('Obteniendo todas las actividades');
     this.allActivities = await this.pagosService.getAll();
+    this.members = await this.groupService.getGroupMembers(this.idGroup)
     this.filterSpentsByGroup();
+    console.log(this.members)
   }
 
   filterSpentsByGroup() {

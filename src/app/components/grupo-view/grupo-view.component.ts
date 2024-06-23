@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, of, tap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { UsuariosService } from '../../services/user.service';
 
 
 
@@ -36,7 +37,7 @@ export class GrupoViewComponent {
   groupLoaded: boolean = false
 
 
-  constructor(private modalService: NgbModal, private groupService: GroupService) {
+  constructor(private modalService: NgbModal, private groupService: GroupService, private userService: UsuariosService) {
     this.group = { 
       "id": 0,
       "name": '',
@@ -138,6 +139,7 @@ export class GrupoViewComponent {
             icon: 'success',
             confirmButtonText: 'OK'
           });
+          this.userService.userEmitter.emit('User invitado')
           this.modalService.dismissAll();
         }),
         catchError(error => {
