@@ -22,7 +22,7 @@ export class AppComponent {
     this.userService.authEventEmiter.subscribe(async()=>{
       await this.getUserData()
     })
-      this.user.firstName = localStorage.getItem('firstName');
+      // this.user.firstName = localStorage.getItem('firstName');
   }
 
   async getUserData(){
