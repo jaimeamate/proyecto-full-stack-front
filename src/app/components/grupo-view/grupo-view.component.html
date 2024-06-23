@@ -1,10 +1,10 @@
 <main>
     <section class="d-flex justify-content-between pt-4 px-4">
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 w-50">
             <div>
                 @if (!editing) {
                     <h1>{{group.name}}</h1>
-                    <p>{{group.description || 'Without description'}}</p>
+                    <p class="border border-secondary-subtle rounded p-2 w-50">{{group.description || 'Without description'}}</p>
                 } @else {
                     <form #form="ngForm" (ngSubmit)="applyEdit(form)">
                         <label for="name">Name:</label>
@@ -17,7 +17,7 @@
                             </div>
                         }
                         <label for="description" class="mt-2">Description:</label>
-                        <textarea class="form-control" type="text" [ngModel]="group.description" name="description" id="description" [placeholder]="group.description || 'Type a description'" ngModel></textarea>
+                        <textarea class="form-control" type="text" rows="6" [ngModel]="group.description" name="description" id="description" [placeholder]="group.description || 'Type a description'" maxlength="255" ngModel></textarea>
 
                         <div class="float-end mt-2">
                             <button class="btn btn-success me-1" type="submit" [disabled]="form.invalid">Apply</button>
