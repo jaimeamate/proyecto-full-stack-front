@@ -76,10 +76,12 @@ export class GastosCardComponent {
     // this.refreshPage()
   }
 
-  editMode() {
+  async editMode() {
     this.editing = !this.editing;
     if (this.editing) {
+      
       this.spentsForm.patchValue(this.miSpent);
+      console.log(this.miSpent)
     }
   }
 
@@ -90,9 +92,11 @@ export class GastosCardComponent {
         ...this.spentsForm.value
       };
       this.pagosService.update(updatedSpent)
-        .then(() => {
+        .then(async() => {
           this.miSpent = updatedSpent;
-          this.editMode();
+          await this.editMode();
+          this.payer = await this.userService.getUserById(this.spentsForm.value.idPayer)
+      console.log(this.payer)
           this.spentUpdated.emit(updatedSpent); // Emitir el evento
 
         })
