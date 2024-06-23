@@ -93,6 +93,7 @@ export class RegistroComponent {
         this.usuariosService.update(safeFirstName, safeLastName, phoneNumber, safeEmail, safePassword, ind_baja, safeuserId).subscribe({
           next: (response) => {
             console.log('Actualizado con exitoso', response);
+            localStorage.setItem('firstName',response.firstName);
             Swal.fire({
               title: 'Éxito',
               text: 'Actualizado con éxito',

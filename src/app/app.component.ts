@@ -23,6 +23,7 @@ export class AppComponent {
       this.user = this.authService.getUserData()
       this.user = await this.userService.getUserById(this.user.user_id)
     })
+      this.user.firstName = localStorage.getItem('firstName');
   }
 
   onLogout() {
