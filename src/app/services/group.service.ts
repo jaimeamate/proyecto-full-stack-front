@@ -49,6 +49,12 @@ export class GroupService {
     )
   }
 
+  updatePorcentajes(idGroup: number, body: any): Promise<any>{
+    return firstValueFrom(
+      this.httpClient.patch<any>(`${this.urlBase}/${idGroup}/users/change`,body)
+    )
+  }
+
   sendInputs(payload: { email: string, groupId: number }): Observable<any> {
     console.log(payload);
     return this.httpClient.post(`${this.urlBase}/${payload.groupId}/add_user`, payload);

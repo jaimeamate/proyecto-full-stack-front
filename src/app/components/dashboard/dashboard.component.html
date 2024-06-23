@@ -17,7 +17,7 @@
       <button class="w-50 btn btn-danger">Delete all payments</button>
     </div>
     <ng-template #content let-modal>
-      <app-edit-members-group [members]="members"></app-edit-members-group>
+      <app-edit-members-group [members]="members" [idGroup]="idGroup"></app-edit-members-group>
     </ng-template>
     <!-- <div class="d-flex justify-content-between align-items-center">
       @for(m of members; track m.user_id){
