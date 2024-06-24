@@ -24,7 +24,7 @@
     @if(user.isAdmin){
       <div class="d-flex w-100 justify-content-around p-2 gap-3">
         <button class="w-50 btn btn-primary" (click)="open(content)">Edit members</button>
-        <button class="w-50 btn btn-danger">Delete all payments</button>
+        <button class="w-50 btn btn-danger" (click)="onDeleteAllPayments()" >Delete all payments</button>
       </div>
     }
     <ng-template #content let-modal>

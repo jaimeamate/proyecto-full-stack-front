@@ -55,6 +55,12 @@ export class GroupService {
     )
   }
 
+  deleteAllActivitiesByIdGroup(idGroup: number): Promise<any>{
+    return firstValueFrom(
+      this.httpClient.delete<any>(`${this.urlBase}/${idGroup}/activity`)
+    )
+  }
+
   sendInputs(payload: { email: string, groupId: number }): Observable<any> {
     console.log(payload);
     return this.httpClient.post(`${this.urlBase}/${payload.groupId}/add_user`, payload);
