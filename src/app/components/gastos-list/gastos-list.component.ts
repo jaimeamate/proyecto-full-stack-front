@@ -86,34 +86,26 @@ export class GastosListComponent {
 
   async getSpents(): Promise<void> {
     this.listLoaded = false
-    console.log('Obteniendo todas las actividades');
-    this.allActivities = await this.pagosService.getAll();
-    this.members = await this.groupService.getGroupMembers(this.idGroup)
-    this.filterSpentsByGroup();
-    console.log(this.members)
+    this.allActivities = await this.pagosService.getAll(); // Carga todas las actividades (pagos) usando el servicio pagosService
+    this.members = await this.groupService.getGroupMembers(this.idGroup) // Carga los miembros del grupo usando el servicio groupService
+    this.filterSpentsByGroup(); // Filtra las actividades para obtener solo las del grupo específico
   }
 
   filterSpentsByGroup() {
-    if (this.idGroup) {
-      console.log('Filtrando gastos para el grupo con ID:', this.idGroup);
-      this.spents = this.allActivities.filter(activity => activity.idGroup === this.idGroup);
-      console.log(this.spents.length)
-      console.log(this.spents)
-      if(this.spents.length>0){
-        this.spentsPayments = this.spents.map((s):number=>{
-          return parseFloat(s.amount.toString())
+    if (this.idGroup) { 
+      this.spents = this.allActivities.filter(activity => activity.idGroup === this.idGroup); // Filtra las actividades para obtener solo las del grupo específico
+      if(this.spents.length>0){ // Verifica si hay actividades después del filtrado
+        this.spentsPayments = this.spents.map((s):number=>{ 
+          return parseFloat(s.amount.toString()) // Convierte la cantidad de cada actividad a un número y crea un array con estas cantidades
         })
-        this.listLoaded = true
+        this.listLoaded = true // Marca que la lista ha sido cargada
       }
-      console.log(this.spentsPayments)
-      console.log('Gastos filtrados:', this.spents);
     }
 
-
   }
+
 //PARA ABRIR EL FORM CON EL BOTON
  
-
   openGastosModal() {
     this.isGastosModalOpen = true;
     this.modalService.open(this.modalContent);
@@ -141,13 +133,4 @@ export class GastosListComponent {
 
 
 
-  // openGastosModal(idGroup: number) {
-  //   const modalRef = this.modalService.open(CrearGastosComponent);
-  //   modalRef.componentInstance.spentCreated.subscribe(async () => {
-  //    await this.getSpents()
-    
-  //   });
-  // }
-
-
-// }
+ 
