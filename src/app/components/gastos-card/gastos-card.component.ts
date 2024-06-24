@@ -89,16 +89,10 @@ export class GastosCardComponent {
       const id = params.id
       try {
         this.user = this.authService.getUserData()
-        console.log(this.user)
-        console.log(this.user)    
         this.group = await this.groupService.getById(id)
         this.members = await this.groupService.getGroupMembers(id)
         const [userData] = this.members.filter((m:any) => m.id === this.user.user_id)
-        console.log(this.members)
-        console.log(userData)
         this.isAdmin = userData.isAdmin
-        console.log(this.members)
-        console.log(this.isAdmin)
         this.user = userData
         this.groupLoaded = true
       } catch (error) {
@@ -112,9 +106,7 @@ export class GastosCardComponent {
   async editMode() {
     this.editing = !this.editing;
     if (this.editing) {
-      
-      this.spentsForm.patchValue(this.miSpent);
-      console.log(this.miSpent)
+     this.spentsForm.patchValue(this.miSpent);
     }
   }
 
@@ -129,7 +121,6 @@ export class GastosCardComponent {
           this.miSpent = updatedSpent;
           await this.editMode();
           this.payer = await this.userService.getUserById(this.spentsForm.value.idPayer)
-      console.log(this.payer)
           this.spentUpdated.emit(updatedSpent); // Emitir el evento
 
         })

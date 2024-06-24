@@ -1,7 +1,8 @@
 
 
-    <div class="container">
-      <div class="row justify-content-center shadow p-2 rounded" >
+    <section class="container card border-primary ">
+        <!-- Tarjetas de los gastos -->
+      <div class="row justify-content-center shadow p-2 rounded  " >
           @if (!editing) {
             <div class="col-5">
                 <h3>{{miSpent.name}}</h3>
@@ -14,7 +15,7 @@
 
           } @else {
 
-
+            <!-- Para editar el gasto -->
             <form [formGroup]="spentsForm" (ngSubmit)="applyEdit()" class="mt-4">
               <div class="mb-3">
                   <label class="form-label" for="name">Nombre gasto</label>
@@ -70,6 +71,7 @@
               
            </form>
           }
+          <!-- Aqui ACABA para editar el gasto -->
 
           <!-- Boton de opciones limitado solo a los administradores -->
           @if(isAdmin){
@@ -95,7 +97,7 @@
           }
 
       </div>
-  </div>
+    </section>
 
 
 
