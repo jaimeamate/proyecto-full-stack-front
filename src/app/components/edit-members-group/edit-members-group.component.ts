@@ -59,7 +59,7 @@ export class EditMembersGroupComponent {
     if(this.suma100){
       let body = []
       for (const key in formulario.value){
-        body.push({userId:parseInt(key),percent:parseFloat(formulario.value[key])})
+        body.push({userId:parseInt(key),percent:parseFloat(formulario.value[key]).toFixed(2)})
       }
       console.log(body);
       // ENVIA PETICION DE PATCH
@@ -68,7 +68,8 @@ export class EditMembersGroupComponent {
       this.modalService.dismissAll()
     }
   }
-  checkError(field: string, validator: string): boolean | undefined {
-    return this.formulario.get(field)?.hasError(validator) && this.formulario.get(field)?.touched;
+  checkError(field: number, validator: string): boolean | undefined {
+    const fieldStringfied = field.toString()
+    return this.formulario.get(fieldStringfied)?.hasError(validator) && this.formulario.get(fieldStringfied)?.touched;
   }
 }

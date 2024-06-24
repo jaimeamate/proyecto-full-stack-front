@@ -13,13 +13,13 @@
                     <div>
                         <label for="porcentaje-{{m.id}}"><small>Percentaje</small></label>
                         <input type="number" class="form-control" id="porcentaje-{{m.id}}" name="porcentaje-{{m.id}}" [placeholder]="1/members.length | percent" formControlName="{{m.id}}" required>
-                        @if(checkError('porcentaje-'+m.id,'required')){
+                        @if(checkError(m.id,'required')){
                             <small class="text-danger">Required</small>
                         }
-                        @if(checkError('porcentaje-'+m.id,'max')){
+                        @if(checkError(m.id,'max')){
                             <small class="text-danger">Max percentaje allowed is 100%</small>
                         }
-                        @if(checkError('porcentaje-'+m.id,'min')){
+                        @if(checkError(m.id,'min')){
                             <small class="text-danger">Min percentaje allowed is 0%</small>
                         }
                     </div>
