@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupService } from '../../services/group.service';
 import { UsuariosService } from '../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-members-group',
@@ -14,6 +15,7 @@ import { UsuariosService } from '../../services/user.service';
 })
 export class EditMembersGroupComponent {
   @Input() members: any;
+  @Input() user: any;
   @Input() idGroup: number = 0
   groupService = inject(GroupService)
   userService = inject(UsuariosService)
@@ -27,8 +29,10 @@ export class EditMembersGroupComponent {
   }
 
   ngOnInit(){
-    console.log(this.members)
-    console.log(this.members)
+    console.log(this.user)
+    this.buildForm()
+  }
+  buildForm(){
     this.members.forEach( (m:any) => {
       this.formulario.addControl(`${m.id}`,new FormControl(
         m.percent,[
@@ -38,7 +42,6 @@ export class EditMembersGroupComponent {
         ]
       ))
     });
-    console.log(this.formulario)
   }
 
   suma100 = true
@@ -71,5 +74,35 @@ export class EditMembersGroupComponent {
   checkError(field: number, validator: string): boolean | undefined {
     const fieldStringfied = field.toString()
     return this.formulario.get(fieldStringfied)?.hasError(validator) && this.formulario.get(fieldStringfied)?.touched;
+  }
+  onMemberDelete(member:any){
+    const memberName = `${member.firstName} ${member.lastName}` 
+    Swal.fire({
+      title: `Are you sure to delete member ${memberName}?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await this.groupService.deleteGroupMembersByIdUser(this.idGroup,member.id)
+        Swal.fire({
+          title: "Deleted!",
+          text: `Member ${memberName} has been deleted.`,
+          icon: "success"
+        });
+        
+        this.userService.userEmitter.emit()
+        // this.formulario.removeControl(`${member.id}`)
+        // this.formulario = new FormGroup({})
+        // this.members = this.members.map((m:any)=>{
+        //   return m.id !== member.id
+        // })
+        // this.buildForm()
+        this.modalService.dismissAll()
+      }
+    });
   }
 }

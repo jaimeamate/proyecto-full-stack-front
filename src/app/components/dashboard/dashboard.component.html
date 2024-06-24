@@ -24,11 +24,11 @@
     @if(user.isAdmin){
       <div class="d-flex w-100 justify-content-around p-2 gap-3">
         <button class="w-50 btn btn-primary" (click)="open(content)">Edit members</button>
-        <button class="w-50 btn btn-danger">Delete all payments</button>
+        <button class="w-50 btn btn-danger" (click)="onDeleteAllPayments()" >Delete all payments</button>
       </div>
     }
     <ng-template #content let-modal>
-      <app-edit-members-group [members]="members" [idGroup]="idGroup"></app-edit-members-group>
+      <app-edit-members-group [members]="members" [idGroup]="idGroup" [user]="user"></app-edit-members-group>
     </ng-template>
     <!-- <div class="d-flex justify-content-between align-items-center">
       @for(m of members; track m.user_id){

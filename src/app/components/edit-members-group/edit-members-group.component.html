@@ -6,6 +6,11 @@
         @for(m of members; track m.id){
             <div class="d-flex justify-content-between mt-2 gap-2">
                 <div class="w-50">
+                    @if (m.isAdmin) {
+                        <small class="text-success"> Admin</small>
+                    }@else{
+                        <small class="text-primary"> Member</small>
+                    }
                     <h5>{{m.firstName}} {{m.lastName}}</h5>
                     <small>{{m.email}}</small>
                 </div>
@@ -24,7 +29,7 @@
                         }
                     </div>
                     <div class="w-25 d-flex align-items-center justify-content-center">
-                        <p class="btn btn-danger bi bi-trash3"></p>
+                        <button type="button" class="btn btn-danger bi bi-trash3" (click)="onMemberDelete(m)" [disabled]="m.id === user.id"></button>
                     </div>
                 </div>
             </div>

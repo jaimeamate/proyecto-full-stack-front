@@ -8,6 +8,8 @@ import { CurrencyPipe, DecimalPipe, JsonPipe, PercentPipe } from '@angular/commo
 import { AuthService } from '../../services/auth.service';
 import { EditMembersGroupComponent } from '../edit-members-group/edit-members-group.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
+import { UsuariosService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +32,7 @@ export class DashboardComponent {
 pagosService = inject(PagosService);
 totalAmount: number = 0;
 
-constructor(private modalService: NgbModal) {
+constructor(private modalService: NgbModal,private userService: UsuariosService) {
   console.log(this.user?.isAdmin)
   // this.user = authService.getUserData()
   // console.log(this.user)
@@ -74,6 +76,27 @@ calculateTotal(){
 }
 open(content: TemplateRef<any>) {
   this.modalService.open(content, { size: 'lg' })
+}
+onDeleteAllPayments(){
+  Swal.fire({
+    title: "Are you sure to delete all paymets?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonColor: "#3085d6",
+    confirmButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      await this.groupService.deleteAllActivitiesByIdGroup(this.idGroup)
+      this.userService.userEmitter.emit()
+      Swal.fire({
+        title: "Deleted!",
+        text: "All payments has been deleted.",
+        icon: "success"
+      });
+    }
+  });
 }
 
 
