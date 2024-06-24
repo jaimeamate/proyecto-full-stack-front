@@ -78,25 +78,23 @@ export class GastosCardComponent {
 
   async ngOnInit(): Promise<void> {
 
-   await this.getPayerNameById(this.miSpent.idPayer)
-   console.log(this.payer)
-
+   await this.getPayerNameById(this.miSpent.idPayer) // Obtiene el nombre del pagador por su ID y lo asigna a this.payer
     if (this.miSpent) {
-      this.spentsForm.patchValue(this.miSpent);
+      this.spentsForm.patchValue(this.miSpent);// Si this.miSpent existe, actualiza el formulario con sus valores
     }
 
     this.activatedRoute.params.subscribe(async (params:any) => {
-      const id = params.id
+      const id = params.id // Obtiene el ID de los parámetros de la ruta
       try {
-        this.user = this.authService.getUserData()
-        this.group = await this.groupService.getById(id)
-        this.members = await this.groupService.getGroupMembers(id)
-        const [userData] = this.members.filter((m:any) => m.id === this.user.user_id)
-        this.isAdmin = userData.isAdmin
-        this.user = userData
-        this.groupLoaded = true
+        this.user = this.authService.getUserData() // Obtiene los datos del usuario autenticado
+        this.group = await this.groupService.getById(id)// Obtiene el grupo por ID
+        this.members = await this.groupService.getGroupMembers(id)// Obtiene los miembros del grupo
+        const [userData] = this.members.filter((m:any) => m.id === this.user.user_id)// Filtra los datos del usuario autenticado dentro de los miembros del grupo
+        this.isAdmin = userData.isAdmin // Asigna el rol de administrador
+        this.user = userData // Asigna los datos del usuario
+        this.groupLoaded = true // Marca que el grupo ha sido cargado
       } catch (error) {
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home']) 
       }
     })
   }
@@ -104,23 +102,23 @@ export class GastosCardComponent {
 
 
   async editMode() {
-    this.editing = !this.editing;
+    this.editing = !this.editing; // Alterna el modo de edición
     if (this.editing) {
-     this.spentsForm.patchValue(this.miSpent);
+     this.spentsForm.patchValue(this.miSpent); // Si está en modo de edición, actualiza el formulario con los valores de this.miSpent
     }
   }
 
   applyEdit() {
-    if (this.spentsForm.valid) {
+    if (this.spentsForm.valid) { // Verifica si el formulario es válido
       const updatedSpent: Iactivity = {
         ...this.miSpent,
-        ...this.spentsForm.value
+        ...this.spentsForm.value // Crea una nueva actividad combinando los valores originales y los del formulario
       };
       this.pagosService.update(updatedSpent)
         .then(async() => {
-          this.miSpent = updatedSpent;
+          this.miSpent = updatedSpent; // Actualiza this.miSpent con los nuevos valores
           await this.editMode();
-          this.payer = await this.userService.getUserById(this.spentsForm.value.idPayer)
+          this.payer = await this.userService.getUserById(this.spentsForm.value.idPayer) // Obtiene el nombre del nuevo pagador
           this.spentUpdated.emit(updatedSpent); // Emitir el evento
 
         })
@@ -136,7 +134,8 @@ export class GastosCardComponent {
   
 
   async getPayerNameById(Id?: any): Promise<void> {
-    this.payer = await this.userService.getUserById(Id)  }
+    this.payer = await this.userService.getUserById(Id)
+  } // Obtiene el nombre del pagador por su ID y lo asigna a this.payer
 
   async onDelete() {
     const { value: deleteSpent } = await Swal.fire({
