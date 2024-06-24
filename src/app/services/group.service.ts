@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, catchError, firstValueFrom, of } from 'rxjs';
 import { IGroup } from '../interfaces/igroup';
 
 @Injectable({
@@ -12,10 +12,20 @@ export class GroupService {
   urlBase = 'http://localhost:3030/api/group'
   urlMail = 'http://localhost:3030/api/mail/send'
 
-  getAll(userId: number): Promise<IGroup[]> {
-    return firstValueFrom(
-      this.httpClient.get<IGroup[]>(`${this.urlBase}/users/${userId}/group`)
-    )
+  async getAll(userId: number): Promise<IGroup[]> {
+    try {
+      const groups = await firstValueFrom(
+        this.httpClient.get<IGroup[]>(`${this.urlBase}/users/${userId}/group`).pipe(
+          catchError(() => of([])) // Devuelve un array vacío si hay un error
+        )
+      );
+
+      // Si `groups` es null o undefined, devuelve un array vacío
+      return groups || [];
+    } catch (error) {
+      console.error('Error al obtener los grupos:', error);
+      return []; // Devuelve un array vacío en caso de excepción
+    }
   }
 
   getById(id:number) {

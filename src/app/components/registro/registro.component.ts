@@ -46,12 +46,14 @@ export class RegistroComponent {
     });
   }
 
-  ngOnInit(): void {
-    const userData = this.authService.getUserData();
-    if (userData) {
-      this.usuario = userData;
-      // Asigna otros campos si es necesario
+  async ngOnInit(): Promise<void> {
+    if(this.isUpdateMode){
+      this.usuariosService.authEventEmiter.subscribe(async()=>{
+        await this.getUserData()
+      });
+      await this.getUserData()
     }
+    
   }
   // onSubmit() {
   //   // Aquí iría la lógica para enviar los datos del usuario al servidor
@@ -140,6 +142,17 @@ export class RegistroComponent {
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  async getUserData(){
+    let usuario = this.authService.getUserData()
+    usuario = await this.usuariosService.getUserById(usuario.user_id);
+    console.log(usuario);
+    this.usuario.user_id = usuario.id;
+    this.usuario.email = usuario.email;
+    this.usuario.first_name = usuario.firstName;
+    this.usuario.last_name = usuario.lastName;
+    console.log(this.usuario);
   }
 
 

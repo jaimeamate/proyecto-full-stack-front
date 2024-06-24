@@ -31,7 +31,9 @@ export class ListaGruposComponent {
   async getGroups(): Promise<void> {
     const {user_id:userId} = this.authService.getUserData()
     // console.log(await this.groupService.getAll())
+    console.log("asada" + userId);
     this.groups = await this.groupService.getAll(userId)
+    console.log("dfs" + this.groups);
   }
 
   getColorGroup(index: number) {

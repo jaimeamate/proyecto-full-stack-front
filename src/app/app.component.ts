@@ -26,9 +26,12 @@ export class AppComponent {
   }
 
   async getUserData(){
-    this.user = this.authService.getUserData()
+    this.user = this.authService.getUserData();
+    if(this.user){
     this.user = await this.userService.getUserById(this.user.user_id)
+  
     console.log(this.user.firstName);
+  }
   }
 
   onLogout() {
