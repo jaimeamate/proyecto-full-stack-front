@@ -18,10 +18,10 @@ export class AppComponent {
   constructor(private router: Router, public authService: AuthService, public userService: UsuariosService) {
   }
   async ngOnInit() {
-    await this.getUserData()
     this.userService.authEventEmiter.subscribe(async()=>{
       await this.getUserData()
     })
+    await this.getUserData()
       // this.user.firstName = localStorage.getItem('firstName');
   }
 
