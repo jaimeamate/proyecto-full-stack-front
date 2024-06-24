@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
 import { IGroup } from '../interfaces/igroup';
 
@@ -8,6 +8,7 @@ import { IGroup } from '../interfaces/igroup';
 })
 export class GroupService {
 
+  @Output() groupEmitter = new EventEmitter<any>;
   httpClient = inject(HttpClient)
   urlBase = 'http://localhost:3030/api/group'
   urlMail = 'http://localhost:3030/api/mail/send'

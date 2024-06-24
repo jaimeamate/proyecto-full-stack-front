@@ -1,8 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Iactivity } from '../../interfaces/iactivity';
 import { UsuariosService } from '../../services/user.service';
 import { JsonPipe, PercentPipe } from '@angular/common';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { GroupService } from '../../services/group.service';
 
 @Component({
   selector: 'app-saldos-card',
@@ -12,8 +14,14 @@ import { JsonPipe, PercentPipe } from '@angular/common';
   styleUrl: './saldos-card.component.css'
 })
 export class SaldosCardComponent {
-@Input() myactivity! :Iactivity;
-@Input() member: any;
+  @Input() myactivity! :Iactivity;
+  @Input() member: any;
+  totalAmount: number = 0;
 
-constructor(){}
+  constructor(private groupService: GroupService){}
+  ngOnInit(){
+    this.groupService.groupEmitter.subscribe((total)=>{
+      this.totalAmount = total
+    })
+  }
 }

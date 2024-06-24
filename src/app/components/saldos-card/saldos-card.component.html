@@ -8,26 +8,29 @@
         <small class="text-muted custom-subtitle">{{member.email}}</small>
   </div>
 
-  <div class="row justify-content-between text-center card-body">
-
-    <div class="col-4">
-      <h4>Total pay</h4>
-    </div>
-
-    <div class="col-4">
-      <p class="custom-title">Porcentaje a pagar</p>
-      <p class="custom-subtitle">{{member.percent}}%</p>
-    </div>
-
-    <div class="col-4">
-      <h5 class="align-middle text-primary">SALDO</h5>
+  <div class="row justify-content-center align-items-center text-center card-body">
+    <div class="col-6 d-flex gap-3 justify-content-between align-items-center">
+      <div class="h5">
+        <p class="custom-title">Percentaje</p>
+        <p class="custom-subtitle">{{member.percent}}%</p>
+      </div>
+      <div class="h5">
+        <p class="custom-title">Total Amount</p>
+        <p class="custom-subtitle">{{totalAmount}}</p>
+      </div>
+      <div class="h5">
+        <p class="custom-title">Total Payed</p>
+        <p class="custom-subtitle">{{member.totalPayed}}</p>
+      </div>
+      <div class="h5">
+        <p class="custom-title">To pay</p>
+        <p class="custom-subtitle">{{totalAmount*(member.percent/100)}}</p>
+      </div>
+      <div class="h5">
+        <p class="custom-title">Balance</p>
+        <p class="custom-subtitle" [class.text-danger]="(totalAmount*(member.percent/100)-member.totalPayed)<0" [class.text-success]="(totalAmount*(member.percent/100)-member.totalPayed)>=0" >{{totalAmount*(member.percent/100)-member.totalPayed}}</p>
+      </div>
     </div>
 
   </div>
 </section>
-
-
-
-  
-      
- 
