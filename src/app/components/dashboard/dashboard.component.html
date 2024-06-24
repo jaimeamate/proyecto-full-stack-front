@@ -28,7 +28,7 @@
       </div>
     }
     <ng-template #content let-modal>
-      <app-edit-members-group [members]="members" [idGroup]="idGroup"></app-edit-members-group>
+      <app-edit-members-group [members]="members" [idGroup]="idGroup" [user]="user"></app-edit-members-group>
     </ng-template>
     <!-- <div class="d-flex justify-content-between align-items-center">
       @for(m of members; track m.user_id){

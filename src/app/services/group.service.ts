@@ -49,6 +49,12 @@ export class GroupService {
     )
   }
 
+  deleteGroupMembersByIdUser(idGroup:number ,idUser:number){
+    return firstValueFrom(
+      this.httpClient.post<any>(`${this.urlBase}/${idGroup}/users`,{"usersOut":[idUser]})
+    )
+  }
+
   updatePorcentajes(idGroup: number, body: any): Promise<any>{
     return firstValueFrom(
       this.httpClient.patch<any>(`${this.urlBase}/${idGroup}/users/change`,body)
