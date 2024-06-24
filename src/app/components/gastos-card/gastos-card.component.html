@@ -1,18 +1,112 @@
-<div class="card shadow">
-    <h3 class="card-header text-center">Maricarmen</h3>
-    <ul class="list-group m-1">
-        <li class="list-group-item">Asunto: GASOLINA</li>
-        <li class="list-group-item">Email: maricarmeaftergmail.com</li>
-        <li class="list-group-item bg-primary text-white">GASTO: 30€</li>
-    </ul>
-</div>
 
 
-<!-- <div class="card shadow">
-    <h3 class="card-header text-center">{{ miUsuario.nombre }}</h3>
-    <ul class="list-group m-1">
-        <li class="list-group-item">Asunto{{ miUsuario.edad }}</li>
-        <li class="list-group-item">Email: <a [href]="'mailto:' + miUsuario.email" class="text-danger">{{ miUsuario.email }}</a></li>
-        <li class="list-group-item bg-dark text-white">{{ miUsuario.curso }}</li>
-    </ul>
-</div> -->
+    <section class="container card border-primary ">
+        <!-- Tarjetas de los gastos -->
+      <div class="row justify-content-center shadow p-2 rounded  " >
+          @if (!editing) {
+            <div class="col-5">
+                <h3>{{miSpent.name}}</h3>
+                <p>{{miSpent.date}}</p>
+                <p>{{payer.firstName}}</p>
+            </div>
+            <div class="col-5 text-end ">
+              <h4 class="align-middle pt-lg-2 text-primary">{{miSpent.amount | currency: 'EUR'}}</h4>
+            </div>
+
+          } @else {
+
+            <!-- Para editar el gasto -->
+            <form [formGroup]="spentsForm" (ngSubmit)="applyEdit()" class="mt-4">
+              <div class="mb-3">
+                  <label class="form-label" for="name">Nombre gasto</label>
+                  <input class="form-control"  type="text" id="name" formControlName="name">
+                  @if(checkControl('name', 'required')){
+                      <p class="error">Campo requerido</p>
+                  }
+                
+                      @if(checkControl('name', 'minlength') ){
+                      <p class="error">El campo tiene que tener minimo 3 caracteres</p>
+                      }
+              </div>
+              <div class="mb-3">
+                  <label class="form-label" for="amount">Cantidad</label>
+                  <input class="form-control"  type="number" id="amount" formControlName="amount">
+                  @if(checkControl('amount', 'required')){
+                      <p class="error">Campo requerido</p>
+                      }
+                
+                      @if(checkControl('amount', 'minlenght')){
+                      <p class="error">El campo tiene que tener minimo 1 caracteres</p>
+                      }
+                
+              </div>
+              <div class="mb-3">
+                  <label class="form-label" for="date">Fecha</label>
+                  <input class="form-control"  type="date" id="date" formControlName="date">
+                  @if(checkControl('date', 'required')){
+                      <p class="error">Campo requerido</p>
+                      }
+             </div>
+
+             <div class="mb-3">
+                <label class="form-label" for="payer">Seleciona usuario</label>
+                <select class="form-select" aria-label="Default select example" type="" id="payer" formControlName="idPayer">
+                        @for(member of members; track member.id){
+                            <option [value]="member.id">
+                            {{member.firstName}} {{member.lastName}}
+                        </option>
+                        }
+                    
+                    @if(checkControl('payer', 'required')){
+                        <p class="error">Campo requerido</p>
+                        }
+                  </select>
+                              
+            </div>
+              
+              <div class="float mt-2">
+                <button class="btn btn-success me-1" type="submit">Apply</button>
+                <button class="btn btn-secondary" type="reset" (click)="editMode()">Cancel</button>
+            </div> 
+              
+           </form>
+          }
+          <!-- Aqui ACABA para editar el gasto -->
+
+          <!-- Boton de opciones limitado solo a los administradores -->
+          @if(isAdmin){
+            <div class="col-2">
+                <div ngbDropdown class="d-inline-block float-end">
+                  <button type="button" class="btn btn-outline-secondary bi bi-gear" id="dropdownBasic1" ngbDropdownToggle>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button (click)="editMode()" ngbDropdownItem>
+                          @if (editing) {
+                              <span class="text-danger">Cancel</span>
+                          } @else {
+                              Edit
+                          }
+                      </button>
+                    
+                     <button ngbDropdownItem class="text-danger" (click)="onDelete()">
+                          Delete
+                      </button> 
+                  </div>
+              </div>
+              </div>
+          }
+
+      </div>
+    </section>
+
+
+
+
+
+
+
+    
+    
+  
+
+

@@ -1,4 +1,5 @@
 export interface IGroup {
     "id"?: number,
-    "name": string
+    "name": string,
+    "description"?: string
 }

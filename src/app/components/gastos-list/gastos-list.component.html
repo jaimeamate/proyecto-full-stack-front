@@ -1,48 +1,57 @@
 <section class="container">
-    <!-- Pestaña GASTOS Y SALDOS -->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Gastos</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Saldos</button>
-      </li>
-    </ul>
-  
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-        <section class="container mt-3">
-          <h2>GASTOS DEL GRUPO</h2>
-          <hr>
-          <div class="row">
-            @for (u of listaUsuarios; track $index) {   
-              <div routerLinkActive="active" [routerLink]="['/saldo', u]" class="col-12 col-md-6 col-lg-4">
-                <app-gastos-card class="p-4"></app-gastos-card>
-              </div>
-            } @empty {
-              <h2 class="text-danger">NO HAY RESULTADOS</h2>
-            }
-          </div>
-        </section>
-      </div>
-      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <section class="container">
-          <h2>SALDOS DEL GRUPO</h2>
-          <div class="row">
-            @for (gasto of listaGastos; track $index) {   
-              <div routerLinkActive="active" [routerLink]="['/saldo', gasto]" class="col-12">
-                <app-saldos-card class="row"></app-saldos-card>
-              </div>
-            } @empty {
-              <h2 class="text-danger">NO HAY RESULTADOS</h2>
-            }
-          </div>
-        </section>
-      </div>
+<!-- Aqui se carga el dashboard -->
+  @if (listLoaded) {
+    <div>
+      <app-dashboard [idGroup]="idGroup" [payments]="spentsPayments" [user]="user"  class="p-4"></app-dashboard>
     </div>
+  }
+
+  <!-- Aqui se carga la lista de gastos y saldos con un tab -->
+   <!-- TAB MENU -->
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">GASTOS</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">SALDOS</button>
+    </li>
+  </ul>
+
+  <!-- TAB CONTENT -->
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+      <!-- Aqui se carga Gatos-card -->
+      @for (spent of spents; track spent.id) {   
+        <div class="">
+          <app-gastos-card (spendDeleted)="onSpendDeleted()" (spentUpdated)="onSpendUpdate()" [members]="members"  [miSpent]="spent" class="p-4"></app-gastos-card>
+        </div>
+      } @empty {
+        <div class="text-center">
+          <small class="text-secondary">NO HAY RESULTADOS</small>
+        </div>
+      }
+
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+      
+      @for(m of members; track m.id){
+        <app-saldos-card [member]="m" class="p-4"></app-saldos-card>
+      }
+      
+    </div>
+
+  </div>   
+</section>
+     
     <!-- Botón crear gasto -->
-    <div class="d-flex justify-content-center position-sticky sticky-bottom mt-3">
-      <button class="btn btn-success rounded-pill float-end fs-3 px-4 mb-3">NUEVO GASTO</button>
-    </div>
-  </section>
-  
+     @if(isAdmin){
+      <div class="d-flex justify-content-center position-sticky sticky-bottom mt-3">
+        <button class="btn btn-success rounded-pill float-end fs-3 px-4 mb-3" (click)="openGastosModal()">Nuevo gasto</button>
+      </div>
+      
+      <ng-template #modalContent let-modal>
+        <app-crear-gastos [idGroup]="idGroup" (close)="closeGastosModal()"></app-crear-gastos>
+      </ng-template>
+
+     }
+   

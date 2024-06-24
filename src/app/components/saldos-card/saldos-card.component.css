@@ -1,0 +1,11 @@
+.custom-header {
+    background-color: rgba(0, 123, 255, 0.153); /* Azul con 50% de transparencia */
+  }
+
+  .custom-title {
+    margin-bottom: 0; /* Reduce o elimina el margen inferior */
+  }
+  
+  .custom-subtitle {
+    margin-top: 0; /* Reduce o elimina el margen superior */
+  }

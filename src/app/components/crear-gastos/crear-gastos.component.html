@@ -1,25 +1,68 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario de Gastos</title>
-</head>
-<body>
-    <div class="form-container">
-        <form action="/submit-gasto" method="POST">
-            <h2>Crear Gasto</h2>
-            <div class="form-group">
-                <label for="titulo">Título del Gasto:</label>
-                <input type="text" id="titulo" name="titulo" required>
-            </div>
-            <div class="form-group">
-                <label for="cantidad">Cantidad (€):</label>
-                <input type="number" id="cantidad" name="cantidad" required step="0.01">
-            </div>
-            <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4"></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit">Crear Gasto</button>
-            </div>
-        </form>
-    </div>
+ 
+<section class="container p-4">
+    <h3>NUEVO GASTO</h3>
+    
+    <form [formGroup]="spentsForm" (ngSubmit)="getDataForm()" class="mt-4">
+        <div class="mb-3">
+            <label class="form-label" for="name">Nombre gasto</label>
+            <input class="form-control"  type="text" id="name" formControlName="name" maxlength="50" placeholder="Ejemplo: Gasolina" />
+            @if(checkControl('name', 'required')){
+                <p class="error">Campo requerido</p>
+            }
+          
+                @if(checkControl('name', 'minlength') ){
+                <p class="error">El campo tiene que tener minimo 3 caracteres</p>
+                }
+
+                @if(checkControl('name', 'maxlength') ){
+                    <p class="error">El campo tiene que tener máximo 50 caracteres</p>
+                    }
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="amount">Cantidad</label>
+            <input class="form-control"  type="number" id="amount" formControlName="amount" (input)="limitDigits($event, 10)" placeholder="ingrese cantidad" >
+            @if(checkControl('amount', 'required')){
+                <p class="error">Campo requerido</p>
+                }
+          
+                @if(checkControl('amount', 'minlenght')){
+                <p class="error">El campo tiene que tener minimo 1 cifra</p>
+                }
+
+                @if(checkControl('amount', 'maxDigits') ){
+                    <p class="error">El campo tiene que tener máximo 10 cifras</p>
+                    }
+          
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="date">Fecha</label>
+            <input class="form-control"  type="date" id="date" formControlName="date" [min]="minDate" [max]="maxDate">
+            @if(checkControl('date', 'required')){
+                <p class="error">Campo requerido</p>
+                }
+                          
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="payer">Seleciona usuario</label>
+            <select class="form-select" aria-label="Default select example" type="" id="payer" formControlName="idPayer" >
+                  <option selected>Seleciona usurarios</option>
+
+                    @for(member of members; track member.id){
+                        <option  [value]="member.id">
+                        {{member.firstName}} {{member.lastName}}
+                    </option>
+                    }
+                
+                @if(checkControl('payer', 'required')){
+                    <p class="error">Campo requerido</p>
+                    }
+              </select>
+                          
+        </div>
+       
+        
+        <input type="submit" value="Enviar" class="btn btn-outline-dark mt-3" [disabled]="!spentsForm.valid">
+    </form>
+</section>

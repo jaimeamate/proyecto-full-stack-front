@@ -1,10 +1,87 @@
 <main>
-    <section>
-        <h1>{{group?.name}}</h1>
-        <p>DESCRIPCION</p>
+    <section class="d-flex justify-content-between pt-4 px-4">
+        <div class="flex-grow-1 w-50">
+            <div>
+                @if (!editing) {
+                    <h1>{{group.name}}</h1>
+                    <p class="border border-secondary-subtle rounded p-2 w-50">{{group.description || 'Without description'}}</p>
+                } @else {
+                    <form #form="ngForm" (ngSubmit)="applyEdit(form)">
+                        <label for="name">Name:</label>
+                        <input class="form-control" type="text" pattern="(?=.*[a-zA-Z])[\w\s]*" [class.is-valid]="name.valid" [class.is-invalid]="name.invalid && name.dirty" [ngModel]="group.name" #name="ngModel" name="name" id="name" [placeholder]="group.name || 'Type a group name'" minlength="2" maxlength="15" ngModel required>
+                        @if (name.invalid && name.dirty) {
+                            <div class="text-danger">
+                                @if (name.errors?.['required']) { <span>Required</span> }
+                                @if (name.errors?.['minlength']) { <span>Min length is 2 characters</span> }
+                                @if (name.errors?.['pattern'] && !name.errors?.['minlength']) { <span>Group name must contain characters</span> }
+                            </div>
+                        }
+                        <label for="description" class="mt-2">Description:</label>
+                        <textarea class="form-control" type="text" rows="6" [ngModel]="group.description" name="description" id="description" [placeholder]="group.description || 'Type a description'" maxlength="255" ngModel></textarea>
+
+                        <div class="float-end mt-2">
+                            <button class="btn btn-success me-1" type="submit" [disabled]="form.invalid">Apply</button>
+                            <button class="btn btn-secondary" type="reset" (click)="editMode()">Cancel</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+        @if (isAdmin) {
+            <div class="row flex-grow-1">
+                <div class="col">
+                    <div ngbDropdown class="d-inline-block float-end">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                            Options
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button (click)="editMode()" ngbDropdownItem>
+                                @if (editing) {
+                                    <span class="text-danger">Cancel</span>
+                                } @else {
+                                    Edit
+                                }
+                            </button>
+                            <button ngbDropdownItem class="text-danger" (click)="onDelete()">
+                                Delete
+                            </button>
+                        </div>
+                        <div class="pt-2">
+                            <button type="button" class="btn btn-primary" (click)="openModal()">Enviar Invitacion</button>
+                        </div>
+                    </div>
+                    
+                    <ng-template #modalContent let-modal>
+                        <div class="modal-header">
+                          <h4 class="modal-title">Envio de invitaciones a grupo</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form #form="ngForm" (ngSubmit)="sendInputs(form)">
+                            <div>
+                              <input type="email" class="form-control mb-2" [(ngModel)]="email" name="email" required placeholder="Correo Electrónico">
+                            </div>
+                            <input type="hidden" [(ngModel)]="group.id" name="groupId">
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-success">Enviar</button>
+                              <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cerrar</button>
+                            </div>
+                          </form>
+                        </div>
+                      </ng-template>
+                                
+                </div>
+            </div>
+        }
+        
     </section>
     <hr>
     <section>
-        <p>AQUI VAN LOS LOGS DE GASTOS</p>
+        <!-- <p>AQUI VAN LOS LOGS DE GASTOS</p> -->
+        @if(groupLoaded){
+            <app-gastos-list [idGroup]="group.id ?? 0" [user]="user"></app-gastos-list>
+        }
     </section>
 </main>
+
+
+
