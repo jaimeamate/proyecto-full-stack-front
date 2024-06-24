@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, inject } from '@angular/core';
 import { Iactivity } from '../../interfaces/iactivity';
 import { PagosService } from '../../services/pagos.service';
 import { GroupService } from '../../services/group.service';
@@ -33,45 +33,20 @@ pagosService = inject(PagosService);
 totalAmount: number = 0;
 
 constructor(private modalService: NgbModal,private userService: UsuariosService) {
-  console.log(this.user?.isAdmin)
-  // this.user = authService.getUserData()
-  // console.log(this.user)
-  console.log(this.payments.length)
   this.initialLength = this.payments.length
-  console.log('Constructor - idGroup:', this.idGroup);
 }
 
 async ngOnInit() {
   this.members = await this.groupService.getGroupMembers(this.idGroup)
-  console.log(this.payments)
   this.calculateTotal()
-  console.log('idGroup:', this.idGroup); // Verificar el id del grupo recibido
-  console.log(this.members)
-  console.log(this.totalAmount)
-//   if (this.idGroup !== undefined && this.idGroup !== null) {
-//     this.pagosService.getByGroup(this.idGroup).then(activities => {
-//       console.log('Activities received:', activities); // Verificar los datos obtenidos
-//       this.totalAmount = activities.reduce((sum, activity) => {
-//         const amount = Number(activity.amount);
-//         console.log('Current amount:', amount, 'Current sum:', sum);
-//         return sum + amount;
-//       }, 0);
-//       console.log('Total Amount:', this.totalAmount); // Verificar el total calculado
-//     }).catch(error => {
-//       console.error('Error fetching activities:', error);
-//     });
-//   } else {
-//     console.error('Invalid idGroup:', this.idGroup);
-//   }
-// }
 }
 calculateTotal(){
-  console.log(this.payments)
   if(this.payments && this.initialLength!==this.payments.length){
     this.totalAmount = this.payments.reduce(
       (acc,crr) => acc + crr, 0
     )
     this.initialLength = this.payments.length
+    this.groupService.groupEmitter.emit(this.totalAmount)
   }
 }
 open(content: TemplateRef<any>) {
